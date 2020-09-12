@@ -88,29 +88,47 @@ class SecondViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         setupUI()
     }
+    
+    @objc func showThirdVC() {
+               let thirdViewController = ThirdViewController()
+               thirdViewController.modalPresentationStyle = .fullScreen
+       //        present(secondViewController, animated: true, completion: nil)
+               navigationController?.pushViewController(thirdViewController, animated: true)
+           }
 
     @objc func logInButtonPressed() {
         let nextVC = UITabBarController()
-        nextVC.tabBar.tintColor = .red
+        nextVC.tabBar.tintColor = .init(red: 0.85, green: 0.0, blue: 0.2, alpha: 1)
         nextVC.modalPresentationStyle = .fullScreen
 
-        let calculateImage = UIImage(systemName: "plus.slash.minus", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemPink, renderingMode: .alwaysOriginal)
-        let scheduleImage = UIImage(systemName: "list.dash", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemPink, renderingMode: .alwaysOriginal)
+        let calculateImage = UIImage(systemName: "plus.slash.minus", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
+        let scheduleImage = UIImage(systemName: "list.dash", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
+        let settingsImage = UIImage(systemName: "gear", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
 
         let scheduleBarButton = UITabBarItem(title: "Расписание", image: scheduleImage, tag: 0)
         let calculateBarBytton = UITabBarItem(title: "Калькулятор", image: calculateImage, tag: 1)
+        let settingBarButton = UITabBarItem(title: "Настройки", image: settingsImage, tag: 2)
+
 
         let scheduleVC = UITableViewController()
         scheduleVC.tableView.frame = UIScreen.main.bounds
-        scheduleVC.tableView.backgroundColor = .gray
+        scheduleVC.tableView.backgroundColor = .init(red: 0.93, green: 0.95, blue: 0.96, alpha: 1.0)
         scheduleVC.tabBarItem = scheduleBarButton
 
         let calculateVC = UIViewController()
         calculateVC.view.frame = UIScreen.main.bounds
-        calculateVC.view.backgroundColor = .red
         calculateVC.tabBarItem = calculateBarBytton
+        //ОШИБКА
+        //showThirdVC()
 
-        nextVC.viewControllers = [scheduleVC, calculateVC]
+        let settingsVC = UITableViewController()
+        settingsVC.view.frame = UIScreen.main.bounds
+        settingsVC.view.backgroundColor = .init(red: 0.93, green: 0.95, blue: 0.96, alpha: 1.0)
+        settingsVC.tabBarItem = settingBarButton
+        
+        
+        
+        nextVC.viewControllers = [scheduleVC, calculateVC, settingsVC]
 
         //1
         present(nextVC, animated: true, completion: nil)

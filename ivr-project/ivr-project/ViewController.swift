@@ -24,7 +24,7 @@ class ViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("Открыть калькулятор", for: .normal)
         button.setTitleColor(.init(red: 1, green: 1, blue: 1, alpha: 1.0), for: .normal)
-        button.backgroundColor = UIColor(red: 0.85, green: 0.0, blue: 0.2, alpha: 1.0)
+        button.backgroundColor = UIColor(red: 0.85, green: 0.0, blue: 0.2, alpha: 1)
         button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(showThirdVC), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -33,17 +33,9 @@ class ViewController: UIViewController {
 
     lazy var segmentedController: UISegmentedControl = {
         let segmentedcontroller = UISegmentedControl(items:["Ученик", "Ученик лицея"])
-        segmentedcontroller.backgroundColor = .init(red: 0.85, green: 0.0, blue: 0.2, alpha: 0.95)
+        segmentedcontroller.backgroundColor = .init(red: 0.85, green: 0.0, blue: 0.2, alpha: 1)
         segmentedcontroller.addTarget(self, action: #selector(ViewController.segmentControl(_:)), for: .valueChanged)
         segmentedcontroller.selectedSegmentIndex = 0
-        segmentedcontroller.setTitleTextAttributes([
-            NSAttributedString.Key.font : UIFont(name: "DINCondensed-Bold", size: 18),
-            NSAttributedString.Key.foregroundColor: UIColor.lightGray
-            ], for: .normal)
-        segmentedcontroller.setTitleTextAttributes([
-            NSAttributedString.Key.font : UIFont(name: "DINCondensed-Bold", size: 18),
-            NSAttributedString.Key.foregroundColor: UIColor.red
-            ], for: .selected)
         segmentedcontroller.translatesAutoresizingMaskIntoConstraints = false
         return segmentedcontroller
     }()
@@ -79,14 +71,12 @@ class ViewController: UIViewController {
        switch (segmentedControl.selectedSegmentIndex) {
           case 0:
              // First segment tapped
-            view.addSubview(thirdVCButton)
+            
           break
           case 1:
              // Second segment tapped
-            //showSecondVC()
-            view.addSubview(logIn)
-            view.addSubview(logInButton)
-            view.addSubview(password)
+            showSecondVC()
+            
           break
           default:
           break
@@ -131,36 +121,18 @@ class ViewController: UIViewController {
         appNameLabel.heightAnchor.constraint(equalToConstant: 60.0).isActive = true
         appNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
         
-        //log in text field
-//        logIn.topAnchor.constraint(greaterThanOrEqualTo: segmentedController.bottomAnchor, constant: 8.0).isActive = true
-//        logIn.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
-//        logIn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
-//        logIn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
-        
-        //password text field
-        password.topAnchor.constraint(greaterThanOrEqualTo: logIn.bottomAnchor, constant: 8.0).isActive = true
-        password.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
-        password.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
-        logIn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
-        
-        //button
-        logInButton.topAnchor.constraint(greaterThanOrEqualTo: password.bottomAnchor, constant: 16.0).isActive = true
-        logInButton.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
-        logInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
-        logInButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
-        
-        
-        //Button ThirdVC ОШИБКА
-//        thirdVCButton.topAnchor.constraint(lessThanOrEqualTo: segmentedController.bottomAnchor, constant: 16.0).isActive = true
-//        thirdVCButton.heightAnchor.constraint(equalToConstant: 45.0).isActive = true
-//        thirdVCButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
-//        thirdVCButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
-        
         //Segment Control
         segmentedController.topAnchor.constraint(lessThanOrEqualTo: appNameLabel.bottomAnchor, constant: 16).isActive = true
         segmentedController.heightAnchor.constraint(equalToConstant: 45.0).isActive = true
         segmentedController.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
         segmentedController.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
+        
+          //Button ThirdVC ОШИБКА
+          thirdVCButton.topAnchor.constraint(lessThanOrEqualTo: segmentedController.bottomAnchor, constant: 16.0).isActive = true
+          thirdVCButton.heightAnchor.constraint(equalToConstant: 45.0).isActive = true
+          thirdVCButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
+          thirdVCButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
+        
     }
     
     override func viewDidLoad() {
@@ -168,6 +140,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         view.addSubview(appNameLabel)
         view.addSubview(segmentedController)
+        view.addSubview(thirdVCButton)
         
         setupUI()
     }
