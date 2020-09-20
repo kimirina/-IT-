@@ -5,10 +5,10 @@
 //  Created by Ирина Ким on 07.09.2020.
 //  Copyright © 2020 Kim Irina. All rights reserved.
 //
-
+ 
 import Foundation
 import UIKit
-
+ 
 class ViewController: UIViewController {
     
     lazy var appNameLabel: UILabel = {
@@ -30,91 +30,105 @@ class ViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
+ 
     lazy var segmentedController: UISegmentedControl = {
         let segmentedcontroller = UISegmentedControl(items:["Ученик", "Ученик лицея"])
         segmentedcontroller.backgroundColor = .init(red: 0.85, green: 0.0, blue: 0.2, alpha: 1)
-        segmentedcontroller.addTarget(self, action: #selector(ViewController.segmentControl(_:)), for: .valueChanged)
+        segmentedcontroller.addTarget(self, action: #selector(segmentControllerHandler), for: .valueChanged)
         segmentedcontroller.selectedSegmentIndex = 0
         segmentedcontroller.translatesAutoresizingMaskIntoConstraints = false
         return segmentedcontroller
     }()
-    
-    lazy var logIn: UITextField = {
+ 
+    lazy var inputsContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.backgroundColor = .init(red: 0.55, green: 0.6, blue: 0.68, alpha: 0.2)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 10
+        return view
+    }()
+ 
+    lazy var logInTextField: UITextField = {
         let textField = UITextField()
-        textField.backgroundColor = .init(red: 0.55, green: 0.6, blue: 0.68, alpha: 0.2)
+//      textField.backgroundColor = .init(red: 0.55, green: 0.6, blue: 0.68, alpha: 0.2)
         textField.layer.cornerRadius = 10
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Login"
         return textField
     }()
-    
-    lazy var password: UITextField = {
+ 
+    lazy var passwordTextField: UITextField = {
         let textField = UITextField()
-        textField.backgroundColor = .init(red: 0.55, green: 0.6, blue: 0.68, alpha: 0.2)
+//      textField.backgroundColor = .init(red: 0.55, green: 0.6, blue: 0.68, alpha: 0.2)
         textField.layer.cornerRadius = 10
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Password"
+        textField.isSecureTextEntry = true
         return textField
     }()
-    
-    lazy var logInButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Войти", for: .normal)
-        button.setTitleColor(.init(red: 1, green: 1, blue: 1, alpha: 1.0), for: .normal)
-        button.backgroundColor = UIColor(red: 0.85, green: 0.0, blue: 0.2, alpha: 1.0)
-        button.layer.cornerRadius = 10
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc func segmentControl(_ segmentedControl: UISegmentedControl) {
-       switch (segmentedControl.selectedSegmentIndex) {
-          case 0:
-             // First segment tapped
-            
-          break
-          case 1:
-             // Second segment tapped
-            showSecondVC()
-            
-          break
-          default:
-          break
-       }
-    }
-    
-    @objc func logInButtonPressed() {
-            let nextVC = UITabBarController()
-            nextVC.tabBar.tintColor = .red
-            nextVC.modalPresentationStyle = .fullScreen
-
-            let calculateImage = UIImage(systemName: "plus.slash.minus", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemPink, renderingMode: .alwaysOriginal)
-            let scheduleImage = UIImage(systemName: "list.dash", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemPink, renderingMode: .alwaysOriginal)
-
-            let scheduleBarButton = UITabBarItem(title: "Расписание", image: scheduleImage, tag: 0)
-            let calculateBarBytton = UITabBarItem(title: "Калькулятор", image: calculateImage, tag: 1)
-
-            let scheduleVC = UITableViewController()
-            scheduleVC.tableView.frame = UIScreen.main.bounds
-            scheduleVC.tableView.backgroundColor = .gray
-            scheduleVC.tabBarItem = scheduleBarButton
-
-            let calculateVC = UIViewController()
-            calculateVC.view.frame = UIScreen.main.bounds
-            calculateVC.view.backgroundColor = .red
-            calculateVC.tabBarItem = calculateBarBytton
-
-            nextVC.viewControllers = [scheduleVC, calculateVC]
-
-            //1
-            present(nextVC, animated: true, completion: nil)
-            //2
-    //        navigationController?.pushViewController(nextVC, animated: true)
+ 
+ 
+    @objc func segmentControllerHandler() {
+        switch segmentedController.selectedSegmentIndex {
+        case 0:
+            thirdVCButtonTopAnchor?.isActive = false
+            thirdVCButtonTopAnchor = thirdVCButton.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: 16.0)
+            thirdVCButtonTopAnchor?.isActive = true
+ 
+            thirdVCButton.setTitle("Калькулятор", for: .normal)
+            hideInputViewController()
+        case 1:
+            thirdVCButtonTopAnchor?.isActive = false
+            thirdVCButtonTopAnchor = thirdVCButton.topAnchor.constraint(equalTo: inputsContainerView.bottomAnchor, constant: 16.0)
+            thirdVCButtonTopAnchor?.isActive = true
+ 
+            thirdVCButton.setTitle("Войти", for: .normal)
+            showInputViewController()
+        default :
+            break
         }
+ 
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+ 
+    private var thirdVCButtonTopAnchor: NSLayoutConstraint?
+ 
+    private func hideInputViewController() {
+ 
+        UIView.animate(withDuration: 0.3, animations: {
+            self.inputsContainerView.alpha = 0
+            self.logInTextField.alpha = 0
+            self.passwordTextField.alpha = 0
+        }, completion: { _ in
+            self.inputsContainerView.isHidden = true
+            self.logInTextField.isHidden = true
+            self.passwordTextField.isHidden = true
+        })
+ 
+    }
+ 
+    private func showInputViewController() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.inputsContainerView.isHidden = false
+            self.logInTextField.isHidden = false
+            self.passwordTextField.isHidden = false
+ 
+            self.inputsContainerView.alpha = 1
+            self.logInTextField.alpha = 1
+            self.passwordTextField.alpha = 1
+        })
+    }
+ 
     
-    func setupUI() {
+    private func setupUI() {
         
         view.backgroundColor = UIColor(red: 0.93, green: 0.95, blue: 0.96, alpha: 1.0)
+        inputsContainerView.addSubview(logInTextField)
+        inputsContainerView.addSubview(passwordTextField)
+        hideInputViewController()
         
         //Label
         appNameLabel.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: 128.0).isActive = true
@@ -126,54 +140,68 @@ class ViewController: UIViewController {
         segmentedController.heightAnchor.constraint(equalToConstant: 45.0).isActive = true
         segmentedController.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
         segmentedController.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
-        
-          //Button ThirdVC ОШИБКА
-          thirdVCButton.topAnchor.constraint(lessThanOrEqualTo: segmentedController.bottomAnchor, constant: 16.0).isActive = true
-          thirdVCButton.heightAnchor.constraint(equalToConstant: 45.0).isActive = true
-          thirdVCButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
-          thirdVCButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
-        
+ 
+ 
+        //Inputs container
+        inputsContainerView.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: 8.0).isActive = true
+        inputsContainerView.heightAnchor.constraint(equalToConstant: 90).isActive = true
+        inputsContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
+        inputsContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
+ 
+        //log in text field
+        logInTextField.topAnchor.constraint(equalTo: inputsContainerView.topAnchor, constant: 0.0).isActive = true
+        logInTextField.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        logInTextField.leadingAnchor.constraint(equalTo: inputsContainerView.leadingAnchor, constant: 8.0).isActive = true
+        logInTextField.trailingAnchor.constraint(equalTo: inputsContainerView.trailingAnchor, constant: -8.0).isActive = true
+ 
+        //password text field
+        passwordTextField.topAnchor.constraint(equalTo: logInTextField.bottomAnchor, constant: 8.0).isActive = true
+        passwordTextField.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        passwordTextField.leadingAnchor.constraint(equalTo: inputsContainerView.leadingAnchor, constant: 8.0).isActive = true
+        passwordTextField.trailingAnchor.constraint(equalTo: inputsContainerView.trailingAnchor, constant: -8.0).isActive = true
+ 
+        //Button ThirdVC ОШИБКА
+        thirdVCButton.heightAnchor.constraint(equalToConstant: 45.0).isActive = true
+        thirdVCButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
+        thirdVCButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
+        thirdVCButtonTopAnchor = thirdVCButton.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: 16.0)
+        thirdVCButtonTopAnchor?.isActive = true
+ 
     }
-    
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         view.addSubview(appNameLabel)
         view.addSubview(segmentedController)
         view.addSubview(thirdVCButton)
+        view.addSubview(inputsContainerView)
         
         setupUI()
     }
-
+ 
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = true
     }
-
-
-
-
+ 
+ 
+ 
+ 
     @objc func showSecondVC() {
         let secondViewController = SecondViewController()
         secondViewController.modalPresentationStyle = .fullScreen
-//        present(secondViewController, animated: true, completion: nil)
+        //        present(secondViewController, animated: true, completion: nil)
         navigationController?.pushViewController(secondViewController, animated: true)
     }
-
+ 
     @objc func showThirdVC() {
-            let thirdViewController = ThirdViewController()
-            thirdViewController.modalPresentationStyle = .fullScreen
-    //        present(secondViewController, animated: true, completion: nil)
-            navigationController?.pushViewController(thirdViewController, animated: true)
-        }
-    
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Переход на 2 контроллер" {
-            if let secondVC = segue.destination as? SecondViewController {
-                secondVC.logInLabel.text = "текст из override func prepare"
-            }
-        }
+//      let thirdViewController = ThirdViewController()
+//      thirdViewController.modalPresentationStyle = .fullScreen
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(identifier: "3vc")
+        present(vc, animated: true, completion: nil)
+        //            navigationController?.pushViewController(thirdViewController, animated: true)
+ 
     }
-
+ 
 }
-
