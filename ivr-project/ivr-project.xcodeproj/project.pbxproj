@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		FA2A2C2225174670008A3749 /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2A2C2125174670008A3749 /* CalculatorViewController.swift */; };
+		FA375EE4251FDE41009B2A83 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA375EE3251FDE41009B2A83 /* SettingsViewController.swift */; };
+		FA375EE6251FE6F6009B2A83 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA375EE5251FE6F6009B2A83 /* SettingsCell.swift */; };
+		FA375EE8251FE79E009B2A83 /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA375EE7251FE79E009B2A83 /* SettingsSection.swift */; };
 		FA5588612506499E00798D54 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5588602506499E00798D54 /* AppDelegate.swift */; };
 		FA5588632506499E00798D54 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5588622506499E00798D54 /* SceneDelegate.swift */; };
 		FA5588652506499E00798D54 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5588642506499E00798D54 /* LoginViewController.swift */; };
@@ -18,6 +21,9 @@
 
 /* Begin PBXFileReference section */
 		FA2A2C2125174670008A3749 /* CalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorViewController.swift; sourceTree = "<group>"; };
+		FA375EE3251FDE41009B2A83 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		FA375EE5251FE6F6009B2A83 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		FA375EE7251FE79E009B2A83 /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
 		FA55885D2506499E00798D54 /* ivr-project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ivr-project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA5588602506499E00798D54 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA5588622506499E00798D54 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +68,9 @@
 				FA5588622506499E00798D54 /* SceneDelegate.swift */,
 				FA5588642506499E00798D54 /* LoginViewController.swift */,
 				FA2A2C2125174670008A3749 /* CalculatorViewController.swift */,
+				FA375EE3251FDE41009B2A83 /* SettingsViewController.swift */,
+				FA375EE5251FE6F6009B2A83 /* SettingsCell.swift */,
+				FA375EE7251FE79E009B2A83 /* SettingsSection.swift */,
 				FA5588662506499F00798D54 /* Main.storyboard */,
 				FA558869250649A200798D54 /* Assets.xcassets */,
 				FA55886B250649A200798D54 /* LaunchScreen.storyboard */,
@@ -142,8 +151,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA5588652506499E00798D54 /* LoginViewController.swift in Sources */,
+				FA375EE8251FE79E009B2A83 /* SettingsSection.swift in Sources */,
 				FA2A2C2225174670008A3749 /* CalculatorViewController.swift in Sources */,
+				FA375EE6251FE6F6009B2A83 /* SettingsCell.swift in Sources */,
 				FA5588612506499E00798D54 /* AppDelegate.swift in Sources */,
+				FA375EE4251FDE41009B2A83 /* SettingsViewController.swift in Sources */,
 				FA5588632506499E00798D54 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

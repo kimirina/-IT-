@@ -216,7 +216,7 @@ class LoginViewController: UIViewController {
         calculateVC.tabBarItem = calculateBarBytton
         
         
-        let settingsVC = UITableViewController()
+        let settingsVC = SettingsViewController()
         settingsVC.view.frame = UIScreen.main.bounds
         settingsVC.view.backgroundColor = .init(red: 0.93, green: 0.95, blue: 0.96, alpha: 1.0)
         settingsVC.tabBarItem = settingBarButton
