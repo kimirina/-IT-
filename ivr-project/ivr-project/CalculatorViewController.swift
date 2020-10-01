@@ -10,6 +10,15 @@ import Foundation
 import UIKit
 
 class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    let calculatorLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Калькулятор"
+        label.textColor = UIColor(red: 0.17, green: 0.18, blue: 0.26, alpha: 1.0)
+        label.font = UIFont.boldSystemFont(ofSize: 30.0)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     let subjects = ["Математика", "Физика", "Русский", "Биология"]
     let pickerView: UIPickerView = {
@@ -29,7 +38,7 @@ class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPicker
     }()
 
     var segmentedControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: ["К", "Ф", "Т"])
+        let control = UISegmentedControl(items: ["Констатирующая", "Формирующая", "Творческая"])
         control.backgroundColor = .init(red: 0.85, green: 0.0, blue: 0.2, alpha: 1)
         control.selectedSegmentIndex = 0
         control.translatesAutoresizingMaskIntoConstraints = false
@@ -46,11 +55,13 @@ class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPicker
         return field
     }()
 
-    var resultLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Результат"
-        return label
+    var resultTextField: UITextField = {
+        let field = UITextField()
+        field.translatesAutoresizingMaskIntoConstraints = false
+        field.backgroundColor = .init(red: 0.55, green: 0.60, blue: 0.68, alpha: 1)
+        field.placeholder = "Результат"
+        field.layer.cornerRadius = 10
+        return field
     }()
 
     override func viewDidLoad() {
@@ -62,39 +73,46 @@ class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPicker
         view.addSubview(subjectButton)
         view.addSubview(segmentedControl)
         view.addSubview(marksTextField)
-        view.addSubview(resultLabel)
+        view.addSubview(resultTextField)
         view.addSubview(pickerView)
-
+        view.addSubview(calculatorLabel)
+        
         pickerView.delegate = self
         pickerView.dataSource = self
 
         view.backgroundColor = .white
-        subjectButton.topAnchor.constraint(equalTo: resultLabel.bottomAnchor, constant: 16.0).isActive = true
-        subjectButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 64.0).isActive = true
-        subjectButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -64.0).isActive = true
-        subjectButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        calculatorLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 128).isActive = true
+        calculatorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
 
-        segmentedControl.topAnchor.constraint(equalTo: subjectButton.bottomAnchor, constant: 16.0).isActive = true
-        segmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        segmentedControl.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        segmentedControl.widthAnchor.constraint(equalToConstant: 128).isActive = true
 
-        marksTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 228.0).isActive = true
+        marksTextField.topAnchor.constraint(equalTo: calculatorLabel.topAnchor, constant: 64.0).isActive = true
         marksTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         marksTextField.heightAnchor.constraint(equalToConstant: 80).isActive = true
         marksTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
         marksTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
 
-        resultLabel.topAnchor.constraint(equalTo: marksTextField.bottomAnchor, constant: 16.0).isActive = true
-        resultLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        resultLabel.heightAnchor.constraint(equalToConstant:
-            80).isActive = true
-        resultLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
-        resultLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
+        resultTextField.topAnchor.constraint(equalTo: marksTextField.bottomAnchor, constant: 4.0).isActive = true
+        resultTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        resultTextField.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        resultTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
+        resultTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
 
-        pickerView.topAnchor.constraint(equalTo: resultLabel.bottomAnchor, constant: 16.0).isActive = true
+        segmentedControl.topAnchor.constraint(equalTo: resultTextField.bottomAnchor, constant: 16.0).isActive = true
+        segmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        segmentedControl.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
+        segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
+
+        
+        subjectButton.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 4.0).isActive = true
+        subjectButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
+        subjectButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
+        subjectButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
+        pickerView.topAnchor.constraint(equalTo: subjectButton.bottomAnchor, constant: 4.0).isActive = true
         pickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        pickerView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        pickerView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         pickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
         pickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
     }
@@ -123,4 +141,5 @@ class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPicker
         pickerView.isHidden = true
     }
 }
+
 

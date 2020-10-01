@@ -10,7 +10,9 @@ import Foundation
 import UIKit
 
 class LoginViewController: UIViewController {
-    
+
+    var isVuzControllerEnabler: Bool = true
+
     lazy var appNameLabel: UILabel = {
         let label = UILabel()
         label.text = "Дневник+"
@@ -75,7 +77,7 @@ class LoginViewController: UIViewController {
             thirdVCButtonTopAnchor?.isActive = false
             thirdVCButtonTopAnchor = thirdVCButton.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: 16.0)
             thirdVCButtonTopAnchor?.isActive = true
-            
+        
             thirdVCButton.setTitle("Калькулятор", for: .normal)
             hideInputViewController()
         case 1:
@@ -93,6 +95,7 @@ class LoginViewController: UIViewController {
             self.view.layoutIfNeeded()
         }
     }
+    
     
     private var thirdVCButtonTopAnchor: NSLayoutConstraint?
     
@@ -184,8 +187,10 @@ class LoginViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
-    
-    
+    @objc func showCalculatorVC() {
+        let nextVC = CalculatorViewController()
+        present(nextVC, animated: true)
+    }
     
     @objc func showSecondVC() {
         let nextVC = setupTabBarController()
@@ -200,12 +205,12 @@ class LoginViewController: UIViewController {
         let calculateImage = UIImage(systemName: "plus.slash.minus", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
         let scheduleImage = UIImage(systemName: "list.dash", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
         let settingsImage = UIImage(systemName: "gear", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
-        
+        let vuzImage = UIImage(systemName: "house.fill", withConfiguration: UIImage.SymbolConfiguration(weight: .regular))?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
         let scheduleBarButton = UITabBarItem(title: "Расписание", image: scheduleImage, tag: 0)
         let calculateBarBytton = UITabBarItem(title: "Открыть калькулятор", image: calculateImage, tag: 1)
         let settingBarButton = UITabBarItem(title: "Настройки", image: settingsImage, tag: 2)
-        
-        
+        let vuzBarButton = UITabBarItem(title: "ВУЗы", image: vuzImage, tag: 3)
+
         let scheduleVC = UITableViewController()
         scheduleVC.tableView.frame = UIScreen.main.bounds
         scheduleVC.tableView.backgroundColor = .init(red: 0.93, green: 0.95, blue: 0.96, alpha: 1.0)
@@ -214,22 +219,26 @@ class LoginViewController: UIViewController {
         let calculateVC =  CalculatorViewController()
         calculateVC.view.frame = UIScreen.main.bounds
         calculateVC.tabBarItem = calculateBarBytton
-        
-        
+
         let settingsVC = SettingsViewController()
         settingsVC.view.frame = UIScreen.main.bounds
         settingsVC.view.backgroundColor = .init(red: 0.93, green: 0.95, blue: 0.96, alpha: 1.0)
         settingsVC.tabBarItem = settingBarButton
-        
-        
-        
-        tabBarController.viewControllers = [scheduleVC, calculateVC, settingsVC]
+        let settingsNavigationController = UINavigationController(rootViewController: settingsVC)
+
+        if isVuzControllerEnabler {
+            let vuzController = UIViewController()
+            vuzController.tabBarItem = vuzBarButton
+            tabBarController.viewControllers = [scheduleVC, calculateVC, vuzController, settingsNavigationController]
+        } else {
+            tabBarController.viewControllers = [scheduleVC, calculateVC, settingsNavigationController]
+        }
         
         //        navigationController?.pushViewController(nextVC, animated: true)
         return tabBarController
     }
     
-    
 }
+
 
 

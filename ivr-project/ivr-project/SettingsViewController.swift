@@ -9,47 +9,68 @@
 import Foundation
 import UIKit
 
-class SettingsViewController: UIViewController {
-    
-}
-extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
-    
-        
-        func numberOfSections(in tableView: UITableView) -> Int {
-            return SettingsSection.allCases.count
-        }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0: return 2
-        case 1: return 3
-        default: return 0
-        }
+class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+    let cellsNames = ["🔔 Уведомления", "📚 Виджет", "👮🏼‍♀️ Профиль", "📧 Обратная связь", "❌ Выход"]
+    let cellHeight: CGFloat = 40
+
+    let settingCellId = String(describing: SettingsCell.self)
+
+    let tableView: UITableView = {
+        let table = UITableView()
+        table.isScrollEnabled = false
+        table.translatesAutoresizingMaskIntoConstraints = false
+        return table
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubview(tableView)
+
+        tableView.delegate = self
+        tableView.dataSource = self
+
+        tableView.register(SettingsCell.self, forCellReuseIdentifier: settingCellId)
+        navigationItem.title = "Настройки"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        setupUI()
     }
-    
-        func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-            let view = UIView()
-            view.backgroundColor = .white
-            
-            let label = UILabel()
-            label.text = SettingsSection(rawValue: section)?.description
-            label.textColor = UIColor(red: 0.17, green: 0.18, blue: 0.26, alpha: 1.0)
-            label.font = UIFont.boldSystemFont(ofSize: 30.0)
-            view.addSubview(label)
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
-            
-            return view
-        }
-        
-        func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-            return 40
-        }
-        
+
+    private func setupUI() {
+        tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        tableView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        tableView.heightAnchor.constraint(equalToConstant: cellHeight*CGFloat(cellsNames.count) - 2).isActive = true
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cellsNames.count
+    }
+
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return cellHeight
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! SettingsCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: settingCellId, for: indexPath) as! SettingsCell
+        cell.textLabel!.text = cellsNames[indexPath.row]
+        if cellsNames[indexPath.row] == "❌ Выход" {
+            cell.textLabel?.textColor = .red
+            cell.textLabel?.textAlignment = .center
+        }
         return cell
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if cellsNames[indexPath.row] == "❌ Выход" {
+            dismiss(animated: true, completion: nil)
+        }
+    }
+
 }
+
 
