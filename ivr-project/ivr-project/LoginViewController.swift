@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+//import SwiftEntryKit
 
 class LoginViewController: UIViewController {
 
@@ -202,13 +203,14 @@ class LoginViewController: UIViewController {
         tabBarController.tabBar.tintColor = .init(red: 0.85, green: 0.0, blue: 0.2, alpha: 1)
         
         
-        let calculateImage = UIImage(systemName: "plus.slash.minus", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
-        let scheduleImage = UIImage(systemName: "list.dash", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
-        let settingsImage = UIImage(systemName: "gear", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
-        let vuzImage = UIImage(systemName: "house.fill", withConfiguration: UIImage.SymbolConfiguration(weight: .regular))?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
+        let calculateImage = UIImage(systemName: "plus.slash.minus", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemRed, renderingMode: .automatic)
+        let scheduleImage = UIImage(systemName: "list.dash", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemRed, renderingMode: .automatic)
+        let settingsImage = UIImage(systemName: "gear", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemRed, renderingMode: .automatic)
+        let vuzImage = UIImage(systemName: "house.fill", withConfiguration: UIImage.SymbolConfiguration(weight: .regular))?.withTintColor(.systemRed, renderingMode: .automatic)
         let scheduleBarButton = UITabBarItem(title: "Расписание", image: scheduleImage, tag: 0)
         let calculateBarBytton = UITabBarItem(title: "Открыть калькулятор", image: calculateImage, tag: 1)
         let settingBarButton = UITabBarItem(title: "Настройки", image: settingsImage, tag: 2)
+
         let vuzBarButton = UITabBarItem(title: "ВУЗы", image: vuzImage, tag: 3)
 
         let scheduleVC = UITableViewController()
@@ -239,6 +241,7 @@ class LoginViewController: UIViewController {
     }
     
 }
+
 
 
 

@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import PanModal
 
 class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -42,6 +43,8 @@ class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPicker
         control.backgroundColor = .init(red: 0.85, green: 0.0, blue: 0.2, alpha: 1)
         control.selectedSegmentIndex = 0
         control.translatesAutoresizingMaskIntoConstraints = false
+        let font = UIFont.systemFont(ofSize: 11)
+        control.setTitleTextAttributes([NSAttributedString.Key.font : font], for: .normal)
         return control
     }()
 
@@ -52,6 +55,8 @@ class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPicker
         field.backgroundColor = .init(red: 0.85, green: 0.0, blue: 0.2, alpha: 0.5)
         field.layer.cornerRadius = 10
         field.keyboardType = UIKeyboardType.decimalPad
+        field.setLeftPaddingPoints(16.0)
+        field.setRightPaddingPoints(16.0)
         return field
     }()
 
@@ -61,6 +66,8 @@ class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPicker
         field.backgroundColor = .init(red: 0.55, green: 0.60, blue: 0.68, alpha: 1)
         field.placeholder = "Результат"
         field.layer.cornerRadius = 10
+        field.setLeftPaddingPoints(16.0)
+        field.setRightPaddingPoints(16.0)
         return field
     }()
 
@@ -88,13 +95,13 @@ class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPicker
 
         marksTextField.topAnchor.constraint(equalTo: calculatorLabel.topAnchor, constant: 64.0).isActive = true
         marksTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        marksTextField.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        marksTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         marksTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
         marksTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
 
         resultTextField.topAnchor.constraint(equalTo: marksTextField.bottomAnchor, constant: 4.0).isActive = true
         resultTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        resultTextField.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        resultTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         resultTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
         resultTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
 
@@ -120,7 +127,10 @@ class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPicker
 
     //MARK: - Handlers
     @objc func subjectHandler() {
-        pickerView.isHidden = false
+//        pickerView.isHidden = false
+        let subjectsVC = SubjectsTableViewController()
+        subjectsVC.calculaterViewController = self
+        presentPanModal(subjectsVC)
     }
 
     //MARK:- UIPickerViewDataSource
@@ -141,5 +151,6 @@ class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPicker
         pickerView.isHidden = true
     }
 }
+
 
 
