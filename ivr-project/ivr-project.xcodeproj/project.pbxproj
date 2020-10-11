@@ -18,8 +18,8 @@
 		FA5588682506499F00798D54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA5588662506499F00798D54 /* Main.storyboard */; };
 		FA55886A250649A200798D54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA558869250649A200798D54 /* Assets.xcassets */; };
 		FA55886D250649A200798D54 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA55886B250649A200798D54 /* LaunchScreen.storyboard */; };
+		FAB0020C2532F359003F0130 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB0020B2532F359003F0130 /* Extensions.swift */; };
 		FAC22DCC2529C92100FDD248 /* SubjectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC22DCB2529C92100FDD248 /* SubjectTableViewController.swift */; };
-		FACC810825323E8100A0C1E5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACC810725323E8100A0C1E5 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,8 +38,8 @@
 		FA558869250649A200798D54 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA55886C250649A200798D54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA55886E250649A200798D54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FAB0020B2532F359003F0130 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		FAC22DCB2529C92100FDD248 /* SubjectTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectTableViewController.swift; sourceTree = "<group>"; };
-		FACC810725323E8100A0C1E5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = "../../../Downloads/Archive/ivr-project/Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +100,7 @@
 				FA375EE3251FDE41009B2A83 /* SettingsViewController.swift */,
 				FA375EE5251FE6F6009B2A83 /* SettingsCell.swift */,
 				FA375EE7251FE79E009B2A83 /* SettingsSection.swift */,
-				FACC810725323E8100A0C1E5 /* Extensions.swift */,
+				FAB0020B2532F359003F0130 /* Extensions.swift */,
 				FA5588662506499F00798D54 /* Main.storyboard */,
 				FA558869250649A200798D54 /* Assets.xcassets */,
 				FA55886B250649A200798D54 /* LaunchScreen.storyboard */,
@@ -225,7 +225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA5588652506499E00798D54 /* LoginViewController.swift in Sources */,
-				FACC810825323E8100A0C1E5 /* Extensions.swift in Sources */,
+				FAB0020C2532F359003F0130 /* Extensions.swift in Sources */,
 				FA375EE8251FE79E009B2A83 /* SettingsSection.swift in Sources */,
 				FA2A2C2225174670008A3749 /* CalculatorViewController.swift in Sources */,
 				FA375EE6251FE6F6009B2A83 /* SettingsCell.swift in Sources */,
