@@ -175,6 +175,36 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NetworkSerivce.logIn(
+            login: "kimirina",
+            password: "Irina04112002",
+            completionHandler: { result in
+                switch result {
+                case .success(let token):
+                      print(token)
+                case .failure(let error):
+                      print(error)
+                }
+            }
+        )
+        
+        NetworkSerivce.schedule(
+            login: "kimirina",
+            password: "Irina04112002",
+            student: "49177",
+            days: "20201016-20201017",
+            clas: "11И3",
+            rings: "no",
+            completionHandler: { result in
+                switch result {
+                case .success(let schedule):
+                      print(schedule)
+                case .failure(let error):
+                      print(error)
+                }
+            }
+        )
+        
         // Do any additional setup after loading the view.
         view.addSubview(appNameLabel)
         view.addSubview(segmentedController)

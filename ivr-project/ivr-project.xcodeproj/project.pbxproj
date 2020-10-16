@@ -19,6 +19,7 @@
 		FA55886A250649A200798D54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA558869250649A200798D54 /* Assets.xcassets */; };
 		FA55886D250649A200798D54 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA55886B250649A200798D54 /* LaunchScreen.storyboard */; };
 		FAB0020C2532F359003F0130 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB0020B2532F359003F0130 /* Extensions.swift */; };
+		FAB002132532F569003F0130 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB002122532F569003F0130 /* NetworkService.swift */; };
 		FAC22DCC2529C92100FDD248 /* SubjectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC22DCB2529C92100FDD248 /* SubjectTableViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		FA55886C250649A200798D54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA55886E250649A200798D54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAB0020B2532F359003F0130 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		FAB002122532F569003F0130 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		FAC22DCB2529C92100FDD248 /* SubjectTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -102,11 +104,20 @@
 				FA375EE7251FE79E009B2A83 /* SettingsSection.swift */,
 				FAB0020B2532F359003F0130 /* Extensions.swift */,
 				FA5588662506499F00798D54 /* Main.storyboard */,
+				FAB002112532F530003F0130 /* NetworkLayer */,
 				FA558869250649A200798D54 /* Assets.xcassets */,
 				FA55886B250649A200798D54 /* LaunchScreen.storyboard */,
 				FA55886E250649A200798D54 /* Info.plist */,
 			);
 			path = "ivr-project";
+			sourceTree = "<group>";
+		};
+		FAB002112532F530003F0130 /* NetworkLayer */ = {
+			isa = PBXGroup;
+			children = (
+				FAB002122532F569003F0130 /* NetworkService.swift */,
+			);
+			path = NetworkLayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,6 +235,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAB002132532F569003F0130 /* NetworkService.swift in Sources */,
 				FA5588652506499E00798D54 /* LoginViewController.swift in Sources */,
 				FAB0020C2532F359003F0130 /* Extensions.swift in Sources */,
 				FA375EE8251FE79E009B2A83 /* SettingsSection.swift in Sources */,
