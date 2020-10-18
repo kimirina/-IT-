@@ -23,7 +23,7 @@ class LoginViewController: UIViewController {
         return label
     }()
     
-    lazy var thirdVCButton: UIButton = {
+    lazy var nextVCButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Калькулятор", for: .normal)
         button.setTitleColor(.init(red: 1, green: 1, blue: 1, alpha: 1.0), for: .normal)
@@ -58,6 +58,7 @@ class LoginViewController: UIViewController {
         textField.layer.cornerRadius = 10
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Login"
+        textField.text = "kimirina"
         return textField
     }()
     
@@ -68,6 +69,7 @@ class LoginViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Password"
         textField.isSecureTextEntry = true
+        textField.text = "Irina04112002"
         return textField
     }()
     
@@ -76,17 +78,17 @@ class LoginViewController: UIViewController {
         switch segmentedController.selectedSegmentIndex {
         case 0:
             thirdVCButtonTopAnchor?.isActive = false
-            thirdVCButtonTopAnchor = thirdVCButton.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: 16.0)
+            thirdVCButtonTopAnchor = nextVCButton.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: 16.0)
             thirdVCButtonTopAnchor?.isActive = true
         
-            thirdVCButton.setTitle("Калькулятор", for: .normal)
+            nextVCButton.setTitle("Калькулятор", for: .normal)
             hideInputViewController()
         case 1:
             thirdVCButtonTopAnchor?.isActive = false
-            thirdVCButtonTopAnchor = thirdVCButton.topAnchor.constraint(equalTo: inputsContainerView.bottomAnchor, constant: 16.0)
+            thirdVCButtonTopAnchor = nextVCButton.topAnchor.constraint(equalTo: inputsContainerView.bottomAnchor, constant: 16.0)
             thirdVCButtonTopAnchor?.isActive = true
             
-            thirdVCButton.setTitle("Войти", for: .normal)
+            nextVCButton.setTitle("Войти", for: .normal)
             showInputViewController()
         default :
             break
@@ -165,50 +167,20 @@ class LoginViewController: UIViewController {
         passwordTextField.trailingAnchor.constraint(equalTo: inputsContainerView.trailingAnchor, constant: -8.0).isActive = true
         
         //Button ThirdVC ОШИБКА
-        thirdVCButton.heightAnchor.constraint(equalToConstant: 45.0).isActive = true
-        thirdVCButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
-        thirdVCButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
-        thirdVCButtonTopAnchor = thirdVCButton.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: 16.0)
+        nextVCButton.heightAnchor.constraint(equalToConstant: 45.0).isActive = true
+        nextVCButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
+        nextVCButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
+        thirdVCButtonTopAnchor = nextVCButton.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: 16.0)
         thirdVCButtonTopAnchor?.isActive = true
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NetworkSerivce.logIn(
-            login: "kimirina",
-            password: "Irina04112002",
-            completionHandler: { result in
-                switch result {
-                case .success(let token):
-                      print(token)
-                case .failure(let error):
-                      print(error)
-                }
-            }
-        )
-        
-        NetworkSerivce.schedule(
-            login: "kimirina",
-            password: "Irina04112002",
-            student: "49177",
-            days: "20201016-20201017",
-            clas: "11И3",
-            rings: "no",
-            completionHandler: { result in
-                switch result {
-                case .success(let schedule):
-                      print(schedule)
-                case .failure(let error):
-                      print(error)
-                }
-            }
-        )
-        
         // Do any additional setup after loading the view.
         view.addSubview(appNameLabel)
         view.addSubview(segmentedController)
-        view.addSubview(thirdVCButton)
+        view.addSubview(nextVCButton)
         view.addSubview(inputsContainerView)
         
         setupUI()
@@ -217,17 +189,56 @@ class LoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = true
     }
-    
-    @objc func showCalculatorVC() {
+
+    private func showCalculaterViewController() {
         let nextVC = CalculatorViewController()
+        nextVC.modalPresentationStyle = .fullScreen
         present(nextVC, animated: true)
     }
-    
+
+    private func showTabBarController() {
+
+        guard
+            let login = logInTextField.text,
+            let password = passwordTextField.text
+        else { return }
+
+        NetworkSerivce.logIn(
+            login: login,
+            password: password,
+            completionHandler: { result in
+                switch result {
+                case .success(let token):
+                    NetworkSerivce.token = token
+                    DispatchQueue.main.async {
+                        let nextVC = self.setupTabBarController()
+                        nextVC.modalPresentationStyle = .fullScreen
+                        self.present(nextVC, animated: true, completion: nil)
+                    }
+
+                case .failure:
+                    let alert = UIAlertController(title: "Error", message: "Ошибка аутентификации", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+                    DispatchQueue.main.async {
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+        })
+    }
+
     @objc func showSecondVC() {
-        let nextVC = setupTabBarController()
-        present(nextVC, animated: true)
+        switch segmentedController.selectedSegmentIndex {
+        case 0:
+            showCalculaterViewController()
+        case 1:
+            showTabBarController()
+        default:
+            break
+        }
     }
-    
+
+
+
     private func setupTabBarController() -> UITabBarController {
         let tabBarController = UITabBarController()
         tabBarController.tabBar.tintColor = .init(red: 0.85, green: 0.0, blue: 0.2, alpha: 1)
@@ -243,7 +254,7 @@ class LoginViewController: UIViewController {
 
         let vuzBarButton = UITabBarItem(title: "ВУЗы", image: vuzImage, tag: 3)
 
-        let scheduleVC = UITableViewController()
+        let scheduleVC = ScheduleTableViewController()
         scheduleVC.tableView.frame = UIScreen.main.bounds
         scheduleVC.tableView.backgroundColor = .init(red: 0.93, green: 0.95, blue: 0.96, alpha: 1.0)
         scheduleVC.tabBarItem = scheduleBarButton
@@ -266,11 +277,11 @@ class LoginViewController: UIViewController {
             tabBarController.viewControllers = [scheduleVC, calculateVC, settingsNavigationController]
         }
         
-        //        navigationController?.pushViewController(nextVC, animated: true)
         return tabBarController
     }
     
 }
+
 
 
 

@@ -71,9 +71,20 @@ class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPicker
         return field
     }()
 
+    let logOutButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Выйти", for: .normal)
+        button.tintColor = .init(red: 0.85, green: 0.0, blue: 0.2, alpha: 1)
+        button.sizeToFit()
+        button.addTarget(self, action: #selector(logOutHandler), for: .touchUpInside)
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+
     }
 
     func setupUI() {
@@ -83,7 +94,8 @@ class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPicker
         view.addSubview(resultTextField)
         view.addSubview(pickerView)
         view.addSubview(calculatorLabel)
-        
+        view.addSubview(logOutButton)
+
         pickerView.delegate = self
         pickerView.dataSource = self
 
@@ -122,15 +134,21 @@ class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPicker
         pickerView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         pickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
         pickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
+
+        logOutButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16.0).isActive = true
+        logOutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
     }
 
 
     //MARK: - Handlers
-    @objc func subjectHandler() {
-//        pickerView.isHidden = false
+    @objc private func subjectHandler() {
         let subjectsVC = SubjectsTableViewController()
         subjectsVC.calculaterViewController = self
         presentPanModal(subjectsVC)
+    }
+
+    @objc private func logOutHandler() {
+        dismiss(animated: true, completion: nil)
     }
 
     //MARK:- UIPickerViewDataSource
@@ -151,6 +169,7 @@ class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPicker
         pickerView.isHidden = true
     }
 }
+
 
 
 
