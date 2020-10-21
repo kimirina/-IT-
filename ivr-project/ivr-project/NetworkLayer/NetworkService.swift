@@ -23,6 +23,7 @@ final class NetworkSerivce {
     private static var schedule: String?
     private static var assesments: String?
     static var token: String?
+    static var id: String?
 
     static func logIn(login: String, password: String, completionHandler: @escaping (Result<String, Error>) -> Void) {
         //TODO: Подумать как сделать без force unwrap
@@ -215,6 +216,67 @@ final class NetworkSerivce {
                                 print("Оценки", assesments)
                                 self.assesments = assesments
                                 completionHandler(.success(assesments))
+                            }
+                        }
+                    }
+                }
+            }
+            catch {
+                print("JSON Serialization error!")
+                completionHandler(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    
+    
+    static func id(login: String, password: String, completionHandler: @escaping (Result<String, Error>) -> Void) {
+        //TODO: Подумать как сделать без force unwrap
+        var urlComponents = URLComponents(string: "https://api.eljur.ru/api/getrules")!
+
+        let items = [
+            URLQueryItem(name: "login", value: login),
+            URLQueryItem(name: "password", value: password),
+            URLQueryItem(name: "vendor", value: vendor),
+            URLQueryItem(name: "devKey", value: devkey),
+            URLQueryItem(name: "out_format", value: "json")
+        ]
+        urlComponents.queryItems = items
+
+        guard let url = urlComponents.url else {
+            return
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                print("http error", error?.localizedDescription)
+                completionHandler(.failure(error!))
+                return
+            }
+
+            if let httpResponse = response as? HTTPURLResponse {
+                print("http status code", httpResponse.statusCode)
+                if httpResponse.statusCode < 200 || httpResponse.statusCode > 299 {
+                    let error = httpError()
+                    completionHandler(.failure(error))
+                }
+            }
+
+            guard let data = data else {
+                print("data error")
+                return
+            }
+
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                    if let response = json["response"] as? [String: Any] {
+                        if let result = response["result"] as? [String: Any] {
+                            if let id = result["name"] as? String {
+                                print("id", id)
+                                self.id = id
+                                completionHandler(.success(id))
                             }
                         }
                     }
