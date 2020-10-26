@@ -14,6 +14,8 @@ class ScheduleTableViewController: UIViewController {
         let table = UITableView(frame: UIScreen.main.bounds)
         return table
     }()
+    
+
 
     var schoolDays: [SchoolDay] = [] {
         didSet {
@@ -21,32 +23,55 @@ class ScheduleTableViewController: UIViewController {
         }
     }
 
+    var week = 0
+    private func getSchedule(_ studentId: String, atWeek: Int) {
+
+        let group = DispatchGroup()
+        DispatchQueue.global().async(group: group) {
+            group.enter()
+            NetworkSerivce.schedule(
+                studentId: studentId,
+                days: DateFormatter.getWeek(currentDate: DateFormatter.getWeekDate(after: atWeek)),
+                rings: "yes",
+                completionHandler: { result in
+                    switch result {
+                    case .success(let schedule):
+                        var schoolDays = schedule
+                        for i in 0..<schoolDays.count {
+                            schoolDays[i].items?.sort { Int($0.num!)! < Int($1.num!)! }
+                        }
+                        schoolDays.sort { DateFormatter.getTimeIntervalSince1970(date: $0.name!) < DateFormatter.getTimeIntervalSince1970(date: $1.name!) }
+                        DispatchQueue.main.async {
+                            self.schoolDays += schoolDays
+                        }
+                    case .failure(let error):
+                        print(error)
+                    }
+                    group.leave()
+            }
+            )
+        }
+        group.wait()
+    }
+
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TableViewCell")
+        navigationItem.title = "Расписание"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
 
-        NetworkSerivce.schedule(
-            student: "49177",
-            days: "20201016-20201017",
-            rings: "yes",
-            completionHandler: { result in
-                switch result {
-                case .success(let schedule):
-                    var schoolDays = schedule
-                    for i in 0..<schoolDays.count {
-                        schoolDays[i].items?.sort { $0.num! < $1.num! }
-                    }
-                    DispatchQueue.main.async {
-                        self.schoolDays = schoolDays
-                    }
-                case .failure(let error):
-                    print(error)
-                }
-            }
-        )
+        guard let studentId = NetworkSerivce.studentId else {
+            print("Не удалось получить id студента")
+            return
+        }
+
+        getSchedule(studentId, atWeek: week)
+        week += 1
     }
 }
 
@@ -62,7 +87,8 @@ extension ScheduleTableViewController: UITableViewDelegate, UITableViewDataSourc
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel(frame: .zero)
-        label.text = schoolDays[section].title
+        let date = DateFormatter.getTimeInViewFormat(date: schoolDays[section].name!)
+        label.text = schoolDays[section].title! + ": " + date
         label.sizeToFit()
         return label
     }
@@ -73,5 +99,21 @@ extension ScheduleTableViewController: UITableViewDelegate, UITableViewDataSourc
         return cell!
     }
 
+    //MARK: Обработка конца скролла
+     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let height = scrollView.frame.size.height
+        let contentYoffset = scrollView.contentOffset.y
+        let distanceFromBottom = scrollView.contentSize.height - contentYoffset
+        if distanceFromBottom < height {
+            guard let studentId = NetworkSerivce.studentId else {
+                print("Не удалось получить id студента")
+                return
+            }
+            getSchedule(studentId, atWeek: week)
+            week += 1
+        }
+    }
+
 }
+
 

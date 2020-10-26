@@ -73,7 +73,8 @@ class LoginViewController: UIViewController {
         return textField
     }()
     
-    
+
+    //MARK: - Handlers
     @objc func segmentControllerHandler() {
         switch segmentedController.selectedSegmentIndex {
         case 0:
@@ -96,6 +97,17 @@ class LoginViewController: UIViewController {
         
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
+        }
+    }
+
+    @objc func showSecondVC() {
+        switch segmentedController.selectedSegmentIndex {
+        case 0:
+            showCalculaterViewController()
+        case 1:
+            showTabBarController()
+        default:
+            break
         }
     }
     
@@ -182,7 +194,7 @@ class LoginViewController: UIViewController {
         view.addSubview(segmentedController)
         view.addSubview(nextVCButton)
         view.addSubview(inputsContainerView)
-        
+
         setupUI()
     }
     
@@ -195,6 +207,7 @@ class LoginViewController: UIViewController {
         nextVC.modalPresentationStyle = .fullScreen
         present(nextVC, animated: true)
     }
+
 
     private func showTabBarController() {
 
@@ -209,12 +222,21 @@ class LoginViewController: UIViewController {
             completionHandler: { result in
                 switch result {
                 case .success(let token):
-                    NetworkSerivce.token = token
-                    DispatchQueue.main.async {
-                        let nextVC = self.setupTabBarController()
-                        nextVC.modalPresentationStyle = .fullScreen
-                        self.present(nextVC, animated: true, completion: nil)
-                    }
+                    NetworkSerivce.auth_token = token
+                    NetworkSerivce.getStudentId(completionHandler: { result in
+                        switch result {
+                        case .success(let id):
+                            print("студент айди", id)
+                            DispatchQueue.main.async {
+                                let nextVC = self.setupTabBarController()
+                                nextVC.modalPresentationStyle = .fullScreen
+                                self.present(nextVC, animated: true, completion: nil)
+                            }
+                        case .failure(let error):
+                            print(error)
+                        }
+                    })
+
 
                 case .failure:
                     let alert = UIAlertController(title: "Error", message: "Ошибка аутентификации", preferredStyle: .alert)
@@ -224,17 +246,6 @@ class LoginViewController: UIViewController {
                     }
                 }
         })
-    }
-
-    @objc func showSecondVC() {
-        switch segmentedController.selectedSegmentIndex {
-        case 0:
-            showCalculaterViewController()
-        case 1:
-            showTabBarController()
-        default:
-            break
-        }
     }
 
 
@@ -258,6 +269,7 @@ class LoginViewController: UIViewController {
         scheduleVC.tableView.frame = UIScreen.main.bounds
         scheduleVC.tableView.backgroundColor = .init(red: 0.93, green: 0.95, blue: 0.96, alpha: 1.0)
         scheduleVC.tabBarItem = scheduleBarButton
+        let scheduleNavigationController = UINavigationController(rootViewController: scheduleVC)
         
         let calculateVC =  CalculatorViewController()
         calculateVC.view.frame = UIScreen.main.bounds
@@ -272,7 +284,7 @@ class LoginViewController: UIViewController {
         if isVuzControllerEnabler {
             let vuzController = UIViewController()
             vuzController.tabBarItem = vuzBarButton
-            tabBarController.viewControllers = [scheduleVC, calculateVC, vuzController, settingsNavigationController]
+            tabBarController.viewControllers = [scheduleNavigationController, calculateVC, vuzController, settingsNavigationController]
         } else {
             tabBarController.viewControllers = [scheduleVC, calculateVC, settingsNavigationController]
         }
@@ -281,6 +293,7 @@ class LoginViewController: UIViewController {
     }
     
 }
+
 
 
 

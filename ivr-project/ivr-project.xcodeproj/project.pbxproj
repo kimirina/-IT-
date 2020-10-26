@@ -19,6 +19,7 @@
 		FA5588682506499F00798D54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA5588662506499F00798D54 /* Main.storyboard */; };
 		FA55886A250649A200798D54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA558869250649A200798D54 /* Assets.xcassets */; };
 		FA55886D250649A200798D54 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA55886B250649A200798D54 /* LaunchScreen.storyboard */; };
+		FA8CE6CA25460BB400FE10BF /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8CE6C925460BB400FE10BF /* DateFormatter.swift */; };
 		FA9D86C4253B5D4C0017C697 /* SchoolDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9D86C3253B5D4C0017C697 /* SchoolDay.swift */; };
 		FA9D86C8253B5DC20017C697 /* SchoolClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9D86C7253B5DC20017C697 /* SchoolClass.swift */; };
 		FAB0020C2532F359003F0130 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB0020B2532F359003F0130 /* Extensions.swift */; };
@@ -43,6 +44,7 @@
 		FA558869250649A200798D54 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA55886C250649A200798D54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA55886E250649A200798D54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA8CE6C925460BB400FE10BF /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		FA9D86C3253B5D4C0017C697 /* SchoolDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolDay.swift; sourceTree = "<group>"; };
 		FA9D86C7253B5DC20017C697 /* SchoolClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolClass.swift; sourceTree = "<group>"; };
 		FAB0020B2532F359003F0130 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -119,11 +121,21 @@
 			path = "ivr-project";
 			sourceTree = "<group>";
 		};
+		FA8CE6C825460B9000FE10BF /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				FA8CE6C925460BB400FE10BF /* DateFormatter.swift */,
+			);
+			name = Helpers;
+			path = ../../..;
+			sourceTree = "<group>";
+		};
 		FA9D86C2253B5D010017C697 /* ScheduleModel */ = {
 			isa = PBXGroup;
 			children = (
 				FA9D86C3253B5D4C0017C697 /* SchoolDay.swift */,
 				FA9D86C7253B5DC20017C697 /* SchoolClass.swift */,
+				FA8CE6C825460B9000FE10BF /* Helpers */,
 			);
 			path = ScheduleModel;
 			sourceTree = "<group>";
@@ -262,6 +274,7 @@
 				FAC22DCC2529C92100FDD248 /* SubjectTableViewController.swift in Sources */,
 				FA5588612506499E00798D54 /* AppDelegate.swift in Sources */,
 				FA48DAF2253C4783001C7185 /* ScheduleTableViewController.swift in Sources */,
+				FA8CE6CA25460BB400FE10BF /* DateFormatter.swift in Sources */,
 				FA375EE4251FDE41009B2A83 /* SettingsViewController.swift in Sources */,
 				FA9D86C8253B5DC20017C697 /* SchoolClass.swift in Sources */,
 				FA5588632506499E00798D54 /* SceneDelegate.swift in Sources */,
