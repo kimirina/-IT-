@@ -18,4 +18,3 @@ struct SchoolClass: Codable {
     var starttime: String?
     var endtime: String?
 }
-

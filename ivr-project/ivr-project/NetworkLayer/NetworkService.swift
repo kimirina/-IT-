@@ -26,8 +26,8 @@ final class NetworkSerivce {
     private static var schedule: String?
     private static var assesments: String?
     static var auth_token: String?
-    static var studentId: String?
-    static var fullname: String?
+	static var studentId: String?
+	static var studentName: String? 
     static var region: String?
     static var city: String?
 
@@ -317,6 +317,11 @@ final class NetworkSerivce {
                                 self.studentId = id
                                 completionHandler(.success(id))
                             }
+							if let name = result["title"] as? String {
+                                print("name", name)
+                                self.studentName = name
+                            }
+
                         }
                     }
                 }
@@ -328,103 +333,6 @@ final class NetworkSerivce {
         }
         task.resume()
     }
-    
-    static func person(completionHandler: @escaping (Result<String, Error>) -> Void) {
-        //TODO: Подумать как сделать без force unwrap
-        var urlComponents = URLComponents(string: "https://api.eljur.ru/api/getrules")!
-
-        let items = [
-            URLQueryItem(name: "auth_token", value: auth_token),
-            URLQueryItem(name: "vendor", value: vendor),
-            URLQueryItem(name: "devKey", value: devkey),
-            URLQueryItem(name: "out_format", value: "json")
-        ]
-        urlComponents.queryItems = items
-
-        guard let url = urlComponents.url else {
-            return
-        }
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard error == nil else {
-                print("http error", error?.localizedDescription)
-                completionHandler(.failure(error!))
-                return
-            }
-
-            if let httpResponse = response as? HTTPURLResponse {
-                print("http status code", httpResponse.statusCode)
-                if httpResponse.statusCode < 200 || httpResponse.statusCode > 299 {
-                    let error = httpError()
-                    completionHandler(.failure(error))
-                }
-            }
-
-            guard let data = data else {
-                print("data error")
-                return
-            }
-            //Полное имя
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                    if let response = json["response"] as? [String: Any] {
-                        if let result = response["result"] as? [String: Any] {
-                            if let fullname = result["title"] as? String {
-                                print("fullname", fullname)
-                                self.fullname = fullname
-                                completionHandler(.success(fullname))
-                            }
-                        }
-                    }
-                }
-            }
-            catch {
-                print("JSON Serialization error!")
-                completionHandler(.failure(error))
-            }
-            
-            //город
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                    if let response = json["response"] as? [String: Any] {
-                        if let result = response["result"] as? [String: Any] {
-                            if let region = result["region"] as? String {
-                                    print("region", region)
-                                    self.region = region
-                                    completionHandler(.success(region))
-                            }
-                        }
-                    }
-                }
-            }
-            catch  {
-                print("JSON Serialization error!")
-                completionHandler(.failure(error))
-            }
-            
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                    if let response = json["response"] as? [String: Any] {
-                        if let result = response["result"] as? [String: Any] {
-                            if let city = result["city"] as? String {
-                                    print("city", city)
-                                    self.city = city
-                                    completionHandler(.success(city))
-                            }
-                        }
-                    }
-                }
-            }
-            catch  {
-                print("JSON Serialization error!")
-                completionHandler(.failure(error))
-            }
-        }
-        task.resume()
-    }
-
 
 }
 

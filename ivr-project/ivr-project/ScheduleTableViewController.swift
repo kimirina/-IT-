@@ -49,26 +49,25 @@ class ScheduleTableViewController: UIViewController {
                     }
                     group.leave()
             }
-            )
-        }
-        group.wait()
-    }
+			)
+		}
+		group.wait()
+	}
 
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-        view.addSubview(tableView)
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TableViewCell")
-        navigationItem.title = "Расписание"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
+	override func viewDidLoad() {
 
-        guard let studentId = NetworkSerivce.studentId else {
-            print("Не удалось получить id студента")
-            return
-        }
+		super.viewDidLoad()
+		view.addSubview(tableView)
+		tableView.delegate = self
+		tableView.dataSource = self
+		tableView.register(UINib(nibName: "ScheduleTableViewCell", bundle: nil), forCellReuseIdentifier: "tableCell123")
+		navigationItem.title = "Расписание"
+		tableView.separatorStyle = .singleLine
+
+		guard let studentId = NetworkSerivce.studentId else {
+			print("Не удалось получить id студента")
+			return
+		}
 
         getSchedule(studentId, atWeek: week)
         week += 1
@@ -89,15 +88,24 @@ extension ScheduleTableViewController: UITableViewDelegate, UITableViewDataSourc
         let label = UILabel(frame: .zero)
         let date = DateFormatter.getTimeInViewFormat(date: schoolDays[section].name!)
         label.text = schoolDays[section].title! + ": " + date
+		label.backgroundColor = .white
         label.sizeToFit()
         return label
     }
 
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return 35
+	}
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell")
-        cell?.textLabel?.text = schoolDays[indexPath.section].items![indexPath.row].name
-        return cell!
+		let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell123") as! ScheduleTableViewCell
+		cell.setCell(schoolClass: schoolDays[indexPath.section].items![indexPath.row])
+		return cell
     }
+
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return 100
+	}
 
     //MARK: Обработка конца скролла
      func scrollViewDidScroll(_ scrollView: UIScrollView) {
