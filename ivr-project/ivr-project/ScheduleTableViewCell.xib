@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="99" id="RKr-HP-dDc" customClass="ScheduleTableViewCell" customModule="ivr_project" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="505" height="99"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RKr-HP-dDc" id="9Hk-Lb-VQt">
+                <rect key="frame" x="0.0" y="0.0" width="505" height="99"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="startTime" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZIM-R6-Viq">
+                        <rect key="frame" x="438.5" y="16" width="50.5" height="13.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="endTime" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fuN-TK-chx">
+                        <rect key="frame" x="443.5" y="61.5" width="45.5" height="13.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Num" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obD-35-iUd">
+                        <rect key="frame" x="16" y="16" width="18.5" height="10"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Учитель" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INC-Ae-Zwo" userLabel="teacher">
+                        <rect key="frame" x="50.5" y="44.5" width="44" height="13.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="startTime" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gfb-0B-f6L">
+                        <rect key="frame" x="50.5" y="66" width="50.5" height="13.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subject" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bbR-7L-dCc">
+                        <rect key="frame" x="50.5" y="16" width="58.5" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="fuN-TK-chx" firstAttribute="top" secondItem="ZIM-R6-Viq" secondAttribute="bottom" constant="32" id="2rb-5P-10b"/>
+                    <constraint firstItem="gfb-0B-f6L" firstAttribute="leading" secondItem="INC-Ae-Zwo" secondAttribute="leading" id="33m-Og-Aah"/>
+                    <constraint firstItem="ZIM-R6-Viq" firstAttribute="top" secondItem="9Hk-Lb-VQt" secondAttribute="top" constant="16" id="7ZO-A2-abm"/>
+                    <constraint firstItem="gfb-0B-f6L" firstAttribute="top" secondItem="INC-Ae-Zwo" secondAttribute="bottom" constant="8" id="9YN-AH-aph"/>
+                    <constraint firstItem="fuN-TK-chx" firstAttribute="trailing" secondItem="ZIM-R6-Viq" secondAttribute="trailing" id="Cec-wO-TFk"/>
+                    <constraint firstItem="obD-35-iUd" firstAttribute="leading" secondItem="9Hk-Lb-VQt" secondAttribute="leading" constant="16" id="I99-qB-dGR"/>
+                    <constraint firstItem="bbR-7L-dCc" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="ZIM-R6-Viq" secondAttribute="leading" constant="-16" id="LXP-Pa-m5Z"/>
+                    <constraint firstItem="bbR-7L-dCc" firstAttribute="top" secondItem="9Hk-Lb-VQt" secondAttribute="top" constant="16" id="Lpw-mV-jdy"/>
+                    <constraint firstItem="bbR-7L-dCc" firstAttribute="leading" secondItem="obD-35-iUd" secondAttribute="trailing" constant="16" id="Lus-EL-Tfj"/>
+                    <constraint firstAttribute="trailing" secondItem="ZIM-R6-Viq" secondAttribute="trailing" constant="16" id="WPh-lx-7JX"/>
+                    <constraint firstItem="obD-35-iUd" firstAttribute="top" secondItem="9Hk-Lb-VQt" secondAttribute="top" constant="16" id="nxr-rw-VbD"/>
+                    <constraint firstItem="INC-Ae-Zwo" firstAttribute="top" secondItem="bbR-7L-dCc" secondAttribute="bottom" constant="8" id="w0z-5y-9in"/>
+                    <constraint firstItem="INC-Ae-Zwo" firstAttribute="leading" secondItem="bbR-7L-dCc" secondAttribute="leading" id="zba-j2-ucq"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="endTimeLabel" destination="fuN-TK-chx" id="D0H-xg-ZhM"/>
+                <outlet property="numLabel" destination="obD-35-iUd" id="8Ks-kT-vVR"/>
+                <outlet property="roomLabel" destination="gfb-0B-f6L" id="erQ-zd-Etf"/>
+                <outlet property="startTimeLabel" destination="ZIM-R6-Viq" id="uxp-eH-xz8"/>
+                <outlet property="subjectLabel" destination="bbR-7L-dCc" id="Fns-Rv-63f"/>
+                <outlet property="teacherLabel" destination="INC-Ae-Zwo" id="ytY-OV-V4e"/>
+            </connections>
+            <point key="canvasLocation" x="-194.92753623188406" y="-99.441964285714278"/>
+        </tableViewCell>
+    </objects>
+</document>
