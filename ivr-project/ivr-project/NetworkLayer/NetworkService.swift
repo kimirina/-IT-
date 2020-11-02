@@ -1,3 +1,4 @@
+
 //
 //  NetworkService.swift
 //  ivr-project
@@ -26,10 +27,11 @@ final class NetworkSerivce {
     private static var schedule: String?
     private static var assesments: String?
     static var auth_token: String?
-	static var studentId: String?
-	static var studentName: String? 
+    static var studentId: String?
+    static var studentName: String?
     static var region: String?
     static var city: String?
+    static var subjects = [String]()
 
     static func logIn(login: String, password: String, completionHandler: @escaping (Result<String, Error>) -> Void) {
         //TODO: Подумать как сделать без force unwrap
@@ -167,6 +169,7 @@ final class NetworkSerivce {
                                                 schoolDays.append(schoolDay)
                                             }
                                         }
+                                        NetworkSerivce.subjects = NetworkSerivce.collectSetOfSubjects(from: schoolDays)
                                         completionHandler(.success(schoolDays))
                                     }
                                 }
@@ -181,6 +184,25 @@ final class NetworkSerivce {
             }
         }
         task.resume()
+    }
+
+    private static func collectSetOfSubjects(from array: [SchoolDay]) -> [String] {
+
+        var result = [String]()
+
+        for (i,day) in array.enumerated() {
+            guard i <= 14 else {
+                break
+            }
+            day.items?.forEach {
+                guard let name = $0.name else {
+                    return
+                }
+                result.append(name)
+            }
+        }
+
+        return Array(Set(result)).sorted()
     }
 
     private static func parseItemInSchoolDay(dictionary: [String: Any]) -> SchoolClass {
@@ -317,7 +339,7 @@ final class NetworkSerivce {
                                 self.studentId = id
                                 completionHandler(.success(id))
                             }
-							if let name = result["title"] as? String {
+                            if let name = result["title"] as? String {
                                 print("name", name)
                                 self.studentName = name
                             }

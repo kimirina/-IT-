@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import PanModal
 
-class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class CalculatorViewController: UIViewController {
     
     let calculatorLabel: UILabel = {
         let label = UILabel()
@@ -95,9 +95,9 @@ class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPicker
         view.addSubview(pickerView)
         view.addSubview(calculatorLabel)
         view.addSubview(logOutButton)
-
-        pickerView.delegate = self
-        pickerView.dataSource = self
+//
+//        pickerView.delegate = self
+//        pickerView.dataSource = self
 
         view.backgroundColor = .white
         
@@ -151,26 +151,8 @@ class CalculatorViewController: UIViewController, UIPickerViewDelegate, UIPicker
         dismiss(animated: true, completion: nil)
     }
 
-    //MARK:- UIPickerViewDataSource
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return subjects.count
-    }
 
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return subjects[row]
-    }
-
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        subjectButton.setTitle(subjects[row], for: .normal)
-        pickerView.isHidden = true
-    }
 }
-
-
 
 
 

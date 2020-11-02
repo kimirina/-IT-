@@ -72,6 +72,13 @@ class LoginViewController: UIViewController {
         textField.text = "Irina04112002"
         return textField
     }()
+
+    lazy var loaderView: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.center = view.center
+        spinner.isHidden = true
+        return spinner
+    }()
     
 
     //MARK: - Handlers
@@ -194,6 +201,7 @@ class LoginViewController: UIViewController {
         view.addSubview(segmentedController)
         view.addSubview(nextVCButton)
         view.addSubview(inputsContainerView)
+        view.addSubview(loaderView)
 
         setupUI()
     }
@@ -228,9 +236,35 @@ class LoginViewController: UIViewController {
                         case .success(let id):
                             print("студент айди", id)
                             DispatchQueue.main.async {
-                                let nextVC = self.setupTabBarController()
-                                nextVC.modalPresentationStyle = .fullScreen
-                                self.present(nextVC, animated: true, completion: nil)
+
+                                let alert = UIAlertController(title: "Экран с вузами", message: "Показывать экран с вузами?", preferredStyle: .alert)
+                                alert.view.tintColor = .init(red: 0.85, green: 0.0, blue: 0.2, alpha: 1)
+
+                                alert.addAction(UIAlertAction(title: "Да", style: .default) { _ in
+                                    self.loaderView.isHidden = false
+                                    self.loaderView.startAnimating()
+                                    let nextVC = self.setupTabBarController()
+                                    nextVC.modalPresentationStyle = .fullScreen
+                                    self.present(nextVC, animated: true) {
+                                        self.loaderView.isHidden = true
+                                        self.loaderView.stopAnimating()
+                                    }
+                                })
+
+                                alert.addAction(UIAlertAction(title: "Нет", style: .default) { _ in
+                                    self.loaderView.isHidden = false
+                                    self.loaderView.startAnimating()
+                                    self.isVuzControllerEnabler = false
+                                    let nextVC = self.setupTabBarController()
+                                    nextVC.modalPresentationStyle = .fullScreen
+                                    self.present(nextVC, animated: true) {
+                                        self.loaderView.isHidden = true
+                                        self.loaderView.stopAnimating()
+                                    }
+                                })
+
+                                self.present(alert, animated: true, completion: nil)
+
                             }
                         case .failure(let error):
                             print(error)
@@ -253,8 +287,8 @@ class LoginViewController: UIViewController {
     private func setupTabBarController() -> UITabBarController {
         let tabBarController = UITabBarController()
         tabBarController.tabBar.tintColor = .init(red: 0.85, green: 0.0, blue: 0.2, alpha: 1)
-        
-        
+
+
         let calculateImage = UIImage(systemName: "plus.slash.minus", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemRed, renderingMode: .automatic)
         let scheduleImage = UIImage(systemName: "list.dash", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemRed, renderingMode: .automatic)
         let settingsImage = UIImage(systemName: "gear", withConfiguration: UIImage.SymbolConfiguration(weight: .medium))?.withTintColor(.systemRed, renderingMode: .automatic)
@@ -282,7 +316,7 @@ class LoginViewController: UIViewController {
         let settingsNavigationController = UINavigationController(rootViewController: settingsVC)
 
         if isVuzControllerEnabler {
-            let vuzController = UIViewController()
+            let vuzController = VUZViewController()
             vuzController.tabBarItem = vuzBarButton
             tabBarController.viewControllers = [scheduleNavigationController, calculateVC, vuzController, settingsNavigationController]
         } else {
@@ -293,6 +327,7 @@ class LoginViewController: UIViewController {
     }
     
 }
+
 
 
 

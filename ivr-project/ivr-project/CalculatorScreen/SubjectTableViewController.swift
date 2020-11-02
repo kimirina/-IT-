@@ -11,19 +11,21 @@ import PanModal
 
 class SubjectsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    let subjects = ["Математика", "Физика", "Русский", "Биология"]
+    let subjects = NetworkSerivce.subjects
+    let cellID = "tableCell123"
 
     var calculaterViewController: CalculatorViewController?
 
     let tableView: UITableView = {
         let table = UITableView(frame: UIScreen.main.bounds)
+//        table.frame.size.height -= 300
         return table
     }()
 
     override func viewDidLoad() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "tableCell123")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         view.addSubview(tableView)
     }
 
@@ -32,11 +34,11 @@ class SubjectsTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return subjects.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         cell.textLabel!.text = subjects[indexPath.row]
         cell.textLabel!.textAlignment = .center
         return cell
@@ -57,14 +59,15 @@ extension SubjectsTableViewController: PanModalPresentable {
     }
 
     var longFormHeight: PanModalHeight {
-        return .maxHeightWithTopInset(400)
+        return .maxHeightWithTopInset(50)
     }
 
     var anchorModalToLongForm: Bool {
-        return false
+        return true
     }
 
 }
+
 
 
 

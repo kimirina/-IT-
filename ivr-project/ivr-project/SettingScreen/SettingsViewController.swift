@@ -1,3 +1,4 @@
+
 //
 //  SettingsViewController.swift
 //  ivr-project
@@ -23,12 +24,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return table
     }()
 
-	let studentNameLabel: UILabel = {
-		let label = UILabel()
-		label.font = .boldSystemFont(ofSize: 22.0)
-		label.translatesAutoresizingMaskIntoConstraints = false
-		return label
-	}()
+    let studentNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 22.0)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,16 +44,16 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     private func setupUI() {
-		view.addSubview(tableView)
-		view.addSubview(studentNameLabel)
+        view.addSubview(tableView)
+        view.addSubview(studentNameLabel)
 
-		if let studentName = NetworkSerivce.studentName {
-			studentNameLabel.text = studentName
-		}
+        if let studentName = NetworkSerivce.studentName {
+            studentNameLabel.text = studentName
+        }
 
-		studentNameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16.0).isActive = true
-		studentNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16.0).isActive = true
-		studentNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 16.0).isActive = true
+        studentNameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16.0).isActive = true
+        studentNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16.0).isActive = true
+        studentNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 16.0).isActive = true
 
         tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         tableView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
