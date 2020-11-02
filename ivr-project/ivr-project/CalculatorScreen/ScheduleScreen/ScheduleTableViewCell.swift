@@ -2,7 +2,7 @@
 //  ScheduleTableViewCell.swift
 //  ivr-project
 //
-//  Created by Игорь Шамрин on 28.10.2020.
+//  Created by Ким Ирина on 28.10.2020.
 //  Copyright © 2020 Kim Irina. All rights reserved.
 //
 

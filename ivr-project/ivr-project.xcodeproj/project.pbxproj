@@ -15,6 +15,7 @@
 		FA375EE6251FE6F6009B2A83 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA375EE5251FE6F6009B2A83 /* SettingsCell.swift */; };
 		FA375EE8251FE79E009B2A83 /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA375EE7251FE79E009B2A83 /* SettingsSection.swift */; };
 		FA471604254F5FFD00F704E4 /* VUZViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA471603254F5FFD00F704E4 /* VUZViewController.swift */; };
+		FA47160A2550543C00F704E4 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4716092550543C00F704E4 /* Notifications.swift */; };
 		FA48DAF2253C4783001C7185 /* ScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA48DAF1253C4783001C7185 /* ScheduleTableViewController.swift */; };
 		FA5588612506499E00798D54 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5588602506499E00798D54 /* AppDelegate.swift */; };
 		FA5588632506499E00798D54 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5588622506499E00798D54 /* SceneDelegate.swift */; };
@@ -41,6 +42,7 @@
 		FA375EE5251FE6F6009B2A83 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		FA375EE7251FE79E009B2A83 /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
 		FA471603254F5FFD00F704E4 /* VUZViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VUZViewController.swift; sourceTree = "<group>"; };
+		FA4716092550543C00F704E4 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		FA48DAF1253C4783001C7185 /* ScheduleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewController.swift; sourceTree = "<group>"; };
 		FA55885D2506499E00798D54 /* ivr-project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ivr-project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA5588602506499E00798D54 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -156,10 +158,11 @@
 			children = (
 				FA5588602506499E00798D54 /* AppDelegate.swift */,
 				FA5588622506499E00798D54 /* SceneDelegate.swift */,
+				FA4716092550543C00F704E4 /* Notifications.swift */,
+				FAB0020B2532F359003F0130 /* Extensions.swift */,
 				FA4715FE254F5E2500F704E4 /* LoginController */,
 				FA4715FF254F5E4F00F704E4 /* CalculatorScreen */,
 				FA471602254F5F7100F704E4 /* SettingScreen */,
-				FAB0020B2532F359003F0130 /* Extensions.swift */,
 				FA471607254F600C00F704E4 /* VUZController */,
 				FA5588662506499F00798D54 /* Main.storyboard */,
 				FAB002112532F530003F0130 /* NetworkLayer */,
@@ -327,6 +330,7 @@
 				FA48DAF2253C4783001C7185 /* ScheduleTableViewController.swift in Sources */,
 				FA8CE6CA25460BB400FE10BF /* DateFormatter.swift in Sources */,
 				7889D49F2549DE8E008E78A3 /* ScheduleTableViewCell.swift in Sources */,
+				FA47160A2550543C00F704E4 /* Notifications.swift in Sources */,
 				FA375EE4251FDE41009B2A83 /* SettingsViewController.swift in Sources */,
 				FA9D86C8253B5DC20017C697 /* SchoolClass.swift in Sources */,
 				FA5588632506499E00798D54 /* SceneDelegate.swift in Sources */,
