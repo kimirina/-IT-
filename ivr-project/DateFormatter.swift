@@ -9,8 +9,26 @@
 import Foundation
 
 extension DateFormatter {
-    static func getWeek(currentDate: Date) -> String {
-        let afterOneWeekDate = currentDate.addingTimeInterval(604800)
+
+    enum DateIntreval {
+        case week
+        case halfYear
+    }
+//31622400
+    static let secondsInWeek: TimeInterval = 604800
+    static let secondsInHalfYear: TimeInterval = 31622400
+
+    static func getEljurDate(currentDate: Date, timeInterval: DateIntreval = .week) -> String {
+
+        var seconds: TimeInterval
+        switch timeInterval {
+        case .week:
+            seconds = secondsInWeek
+        case .halfYear:
+            seconds = secondsInHalfYear
+        }
+
+        let afterOneWeekDate = currentDate.addingTimeInterval(seconds)
         let formater = DateFormatter()
         formater.dateFormat = "YYYYMMdd"
         return "\(formater.string(from: currentDate))-\(formater.string(from: afterOneWeekDate))"
@@ -18,7 +36,7 @@ extension DateFormatter {
 
     static func getWeekDate(after n: Int) -> Date {
         let currentDate = Date()
-        let startAfterNWeeksDate = currentDate.addingTimeInterval(TimeInterval(604800 * n))
+        let startAfterNWeeksDate = currentDate.addingTimeInterval(TimeInterval(Int(secondsInWeek) * n))
         return startAfterNWeeksDate
     }
 
@@ -42,4 +60,5 @@ extension DateFormatter {
         return formater.string(from: date)
     }
 }
+
 

@@ -12,6 +12,7 @@ import PanModal
 class SubjectsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     let subjects = NetworkSerivce.subjects
+    let marks = NetworkSerivce.marks
     let cellID = "tableCell123"
 
     var calculaterViewController: CalculatorViewController?
@@ -45,7 +46,21 @@ class SubjectsTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        calculaterViewController?.subjectButton.setTitle(subjects[indexPath.row], for: .normal)
+        let subject = subjects[indexPath.row]
+        calculaterViewController?.subjectButton.setTitle(subject, for: .normal)
+        guard let subjetcMarks = marks["\(subject)"] else {
+            tableView.deselectRow(at: indexPath, animated: true)
+            dismiss(animated: true, completion: nil)
+            return
+        }
+
+        let marksString = subjetcMarks.reduce("") { $0 + " " + $1.0 }
+        calculaterViewController?.marksTextField.text = marksString
+        tableView.deselectRow(at: indexPath, animated: true)
+        dismiss(animated: true, completion: nil)
+        
+        let weightsString = subjetcMarks.reduce("") { $0 + " " + $1.1 }
+        calculaterViewController?.weightTextField.text = weightsString
         tableView.deselectRow(at: indexPath, animated: true)
         dismiss(animated: true, completion: nil)
     }

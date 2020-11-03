@@ -1,4 +1,3 @@
-
 //
 //  SettingsViewController.swift
 //  ivr-project
@@ -90,6 +89,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
 }
+
 
 
 

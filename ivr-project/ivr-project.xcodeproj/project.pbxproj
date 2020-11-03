@@ -102,7 +102,6 @@
 			children = (
 				FA2A2C2125174670008A3749 /* CalculatorViewController.swift */,
 				FAC22DCB2529C92100FDD248 /* SubjectTableViewController.swift */,
-				FA471601254F5F2400F704E4 /* ScheduleScreen */,
 			);
 			path = CalculatorScreen;
 			sourceTree = "<group>";
@@ -110,6 +109,7 @@
 		FA471601254F5F2400F704E4 /* ScheduleScreen */ = {
 			isa = PBXGroup;
 			children = (
+				FA9D86C2253B5D010017C697 /* ScheduleModel */,
 				7889D49E2549DE8E008E78A3 /* ScheduleTableViewCell.swift */,
 				FA48DAF1253C4783001C7185 /* ScheduleTableViewController.swift */,
 				7889D49C2549DA46008E78A3 /* ScheduleTableViewCell.xib */,
@@ -160,6 +160,8 @@
 				FA5588622506499E00798D54 /* SceneDelegate.swift */,
 				FA4716092550543C00F704E4 /* Notifications.swift */,
 				FAB0020B2532F359003F0130 /* Extensions.swift */,
+				FA8CE6C825460B9000FE10BF /* Helpers */,
+				FA471601254F5F2400F704E4 /* ScheduleScreen */,
 				FA4715FE254F5E2500F704E4 /* LoginController */,
 				FA4715FF254F5E4F00F704E4 /* CalculatorScreen */,
 				FA471602254F5F7100F704E4 /* SettingScreen */,
@@ -179,7 +181,7 @@
 				FA8CE6C925460BB400FE10BF /* DateFormatter.swift */,
 			);
 			name = Helpers;
-			path = ../../..;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		FA9D86C2253B5D010017C697 /* ScheduleModel */ = {
@@ -187,7 +189,6 @@
 			children = (
 				FA9D86C3253B5D4C0017C697 /* SchoolDay.swift */,
 				FA9D86C7253B5DC20017C697 /* SchoolClass.swift */,
-				FA8CE6C825460B9000FE10BF /* Helpers */,
 			);
 			path = ScheduleModel;
 			sourceTree = "<group>";
@@ -196,7 +197,6 @@
 			isa = PBXGroup;
 			children = (
 				FAB002122532F569003F0130 /* NetworkService.swift */,
-				FA9D86C2253B5D010017C697 /* ScheduleModel */,
 			);
 			path = NetworkLayer;
 			sourceTree = "<group>";

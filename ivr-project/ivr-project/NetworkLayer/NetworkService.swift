@@ -20,6 +20,8 @@ private struct dataError: Error {
     
 }
 
+//[ "алгебра": [(5, 0.25), (4, 0.75)...]]
+
 final class NetworkSerivce {
     private static let devkey = "dc7c3c00e5d4e49e4a3135b2cf1073e7"
     private static let vendor = "hselyceum"
@@ -31,6 +33,7 @@ final class NetworkSerivce {
     static var region: String?
     static var city: String?
     static var subjects = [String]()
+    static var marks = [String: [(String, Double)]]()
 
     static func logIn(login: String, password: String, completionHandler: @escaping (Result<String, Error>) -> Void) {
         //TODO: Подумать как сделать без force unwrap
@@ -217,7 +220,7 @@ final class NetworkSerivce {
         return SchoolClass(name: name, num: num, room: room, teacher: teacher, grp_short: grp_short, grp: grp, starttime: starttime, endtime: endtime)
     }
 
-    static func getMarks(login: String, password: String, student: String, days: String,  completionHandler: @escaping (Result<[String: [Int]], Error>) -> Void) {
+    static func getMarks(days: String,  completionHandler: @escaping (Result<[String: [(String, Double)]], Error>) -> Void) {
 
         var urlComponents = URLComponents(string: "https://api.eljur.ru/api/getmarks")!
 
@@ -260,7 +263,6 @@ final class NetworkSerivce {
                 return
             }
 
-            var resultDictionaty = [String: [Int]]()
             do {
                 if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                     if let response = json["response"] as? [String: Any] {
@@ -269,9 +271,18 @@ final class NetworkSerivce {
                                 if let student = students["\(studentId)"] as? [String: Any] {
                                     if let lessons = student["lessons"] as? [[String: Any]] {
                                         for lesson in lessons {
-                                            let subjectName = lesson["name"]
-
+                                            let subjectName = lesson["name"] as! String
+                                            NetworkSerivce.marks["\(subjectName)"] = []
+                                            if let marks = lesson["marks"] as? [[String: Any]] {
+                                                for mark in marks {
+                                                    if let value = mark["value"] as? String,
+                                                       let weight = mark["weight"] as? Double {
+                                                        NetworkSerivce.marks["\(subjectName)"]?.append((value, weight))
+                                                    }
+                                                }
+                                            }
                                         }
+                                        completionHandler(.success(NetworkSerivce.marks))
                                     }
                                 }
 
@@ -356,6 +367,7 @@ final class NetworkSerivce {
     }
 
 }
+
 
 
 

@@ -11,6 +11,8 @@ import UIKit
 import PanModal
 
 class CalculatorViewController: UIViewController {
+
+    var togle: Bool = false
     
     let calculatorLabel: UILabel = {
         let label = UILabel()
@@ -60,10 +62,21 @@ class CalculatorViewController: UIViewController {
         return field
     }()
 
+    var weightTextField: UITextField = {
+        let field = UITextField()
+        field.translatesAutoresizingMaskIntoConstraints = false
+        field.backgroundColor = .init(red: 0.55, green: 0.60, blue: 0.68, alpha: 0.5)
+        field.placeholder = "Коэффициент оценки"
+        field.layer.cornerRadius = 10
+        field.setLeftPaddingPoints(16.0)
+        field.setRightPaddingPoints(16.0)
+        return field
+    }()
+
     var resultTextField: UITextField = {
         let field = UITextField()
         field.translatesAutoresizingMaskIntoConstraints = false
-        field.backgroundColor = .init(red: 0.55, green: 0.60, blue: 0.68, alpha: 1)
+        field.backgroundColor = .init(red: 0.43, green: 0.45, blue: 0.66, alpha: 0.5)
         field.placeholder = "Результат"
         field.layer.cornerRadius = 10
         field.setLeftPaddingPoints(16.0)
@@ -71,6 +84,8 @@ class CalculatorViewController: UIViewController {
         return field
     }()
 
+    
+    
     let logOutButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -84,6 +99,7 @@ class CalculatorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        getMarks()
 
     }
 
@@ -95,6 +111,7 @@ class CalculatorViewController: UIViewController {
         view.addSubview(pickerView)
         view.addSubview(calculatorLabel)
         view.addSubview(logOutButton)
+        view.addSubview(weightTextField)
 //
 //        pickerView.delegate = self
 //        pickerView.dataSource = self
@@ -110,24 +127,34 @@ class CalculatorViewController: UIViewController {
         marksTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         marksTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
         marksTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
+        
 
-        resultTextField.topAnchor.constraint(equalTo: marksTextField.bottomAnchor, constant: 4.0).isActive = true
+        weightTextField.topAnchor.constraint(equalTo: marksTextField.bottomAnchor, constant: 4.0).isActive = true
+        weightTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        weightTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        weightTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
+        weightTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
+        
+        
+        resultTextField.topAnchor.constraint(equalTo: weightTextField.bottomAnchor, constant: 4.0).isActive = true
         resultTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         resultTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         resultTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
         resultTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
-
+        
+        
         segmentedControl.topAnchor.constraint(equalTo: resultTextField.bottomAnchor, constant: 16.0).isActive = true
         segmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         segmentedControl.heightAnchor.constraint(equalToConstant: 40).isActive = true
         segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
         segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
-
+        
         
         subjectButton.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 4.0).isActive = true
         subjectButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
         subjectButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
         subjectButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
 
         pickerView.topAnchor.constraint(equalTo: subjectButton.bottomAnchor, constant: 4.0).isActive = true
         pickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -135,6 +162,7 @@ class CalculatorViewController: UIViewController {
         pickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
         pickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
 
+        
         logOutButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16.0).isActive = true
         logOutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
     }
@@ -151,6 +179,22 @@ class CalculatorViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
+
+    //MARK: - Network response
+
+    private func getMarks() {
+        NetworkSerivce.getMarks(
+            days: "20200901-20201231",
+            completionHandler: {result in
+                switch result {
+                case .success(let marks):
+                    print(marks)
+                case .failure(let error):
+                    print("Ошибка получения оценок: \(error)")
+                }
+            }
+        )
+    }
 
 }
 

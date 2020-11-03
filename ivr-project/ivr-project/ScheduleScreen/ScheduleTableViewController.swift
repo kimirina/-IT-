@@ -12,6 +12,7 @@ class ScheduleTableViewController: UIViewController {
 
     let tableView: UITableView = {
         let table = UITableView(frame: UIScreen.main.bounds)
+        table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
     
@@ -31,7 +32,7 @@ class ScheduleTableViewController: UIViewController {
             group.enter()
             NetworkSerivce.schedule(
                 studentId: studentId,
-                days: DateFormatter.getWeek(currentDate: DateFormatter.getWeekDate(after: atWeek)),
+                days: DateFormatter.getEljurDate(currentDate: DateFormatter.getWeekDate(after: atWeek)),
                 rings: "yes",
                 completionHandler: { result in
                     switch result {
@@ -49,29 +50,41 @@ class ScheduleTableViewController: UIViewController {
                     }
                     group.leave()
             }
-			)
-		}
-		group.wait()
-	}
+            )
+        }
+        group.wait()
+    }
 
-	override func viewDidLoad() {
+    override func viewDidLoad() {
 
-		super.viewDidLoad()
-		view.addSubview(tableView)
-		tableView.delegate = self
-		tableView.dataSource = self
-		tableView.register(UINib(nibName: "ScheduleTableViewCell", bundle: nil), forCellReuseIdentifier: "tableCell123")
-		navigationItem.title = "Расписание"
-		tableView.separatorStyle = .singleLine
+        super.viewDidLoad()
+        view.addSubview(tableView)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UINib(nibName: "ScheduleTableViewCell", bundle: nil), forCellReuseIdentifier: "tableCell123")
+        navigationItem.title = "Расписание"
+        tableView.separatorStyle = .singleLine
 
-		guard let studentId = NetworkSerivce.studentId else {
-			print("Не удалось получить id студента")
-			return
-		}
+        guard let studentId = NetworkSerivce.studentId else {
+            print("Не удалось получить id студента")
+            return
+        }
 
         getSchedule(studentId, atWeek: week)
         week += 1
+
+        setupUI()
     }
+
+
+    private func setupUI() {
+        view.backgroundColor = .white
+        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    }
+
 }
 
 extension ScheduleTableViewController: UITableViewDelegate, UITableViewDataSource {
@@ -88,24 +101,24 @@ extension ScheduleTableViewController: UITableViewDelegate, UITableViewDataSourc
         let label = UILabel(frame: .zero)
         let date = DateFormatter.getTimeInViewFormat(date: schoolDays[section].name!)
         label.text = schoolDays[section].title! + ": " + date
-		label.backgroundColor = .white
+        label.backgroundColor = .white
         label.sizeToFit()
         return label
     }
 
-	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return 35
-	}
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell123") as! ScheduleTableViewCell
-		cell.setCell(schoolClass: schoolDays[indexPath.section].items![indexPath.row])
-		return cell
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 35
     }
 
-	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return 100
-	}
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell123") as! ScheduleTableViewCell
+        cell.setCell(schoolClass: schoolDays[indexPath.section].items![indexPath.row])
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
 
     //MARK: Обработка конца скролла
      func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -123,5 +136,6 @@ extension ScheduleTableViewController: UITableViewDelegate, UITableViewDataSourc
     }
 
 }
+
 
 
