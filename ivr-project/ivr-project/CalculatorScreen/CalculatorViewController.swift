@@ -13,6 +13,27 @@ import PanModal
 class CalculatorViewController: UIViewController {
 
     var togle: Bool = false
+    var subjectMarks = [Mark]() {
+        willSet {
+            print(newValue)
+            let marksString = newValue.reduce("") {
+                guard let value = $1.value else {
+                    return $0
+                }
+                return $0 + " " + value
+            }
+            marksTextField.text = marksString
+//
+//            let weightsString = newValue.reduce("") { $0 + " " + String($1.1) }
+//            weightTextField.text = weightsString
+        }
+    }
+
+    var resultMark: Double = 0.0 {
+        willSet {
+            resultTextField.text = String(newValue)
+        }
+    }
     
     let calculatorLabel: UILabel = {
         let label = UILabel()
@@ -196,7 +217,95 @@ class CalculatorViewController: UIViewController {
         )
     }
 
+    //MARK: - Calculation result
+    func getResultMark() {
+
+        //TODO: УДАЛИТЬ!!!
+//        for i in 0...subjectMarks.count - 1 {
+//            subjectMarks[i].weight = ["0.25", "0.5", "0.75"].randomElement()
+//        }
+        subjectMarks = subjectMarks.map { (mark: Mark) -> Mark in
+            let newWeight = ["0.25", "0.5", "0.75"].randomElement()
+            let newType = ["Констатирующая", "Формирующая", "Творческая"].randomElement()
+            return Mark(type: newType, weight: newWeight, value: mark.value)
+        }
+
+        //Веса оценок
+        var v1: Double = 0 // вес К
+        var v2: Double = 0 // вес F
+        var v3: Double = 0 // вес Т
+
+        // Средние оценки
+        var K: Double // Констатирующая
+        var F: Double // Формирующая
+        var T: Double // Творческая
+
+        var tempK = 0
+        var tempF = 0
+        var tempT = 0
+
+        var countK = 0
+        var countF = 0
+        var countT = 0
+
+        for mark in subjectMarks {
+
+            switch mark.type {
+            case "Констатирующая":
+                if let weight = mark.weight, let doubleValue = Double(weight) {
+                    v1 = doubleValue
+                }
+                if let value = mark.value, value != "н", let intValue = Int(value) {
+                    tempK += intValue
+                    countK += 1
+                }
+
+            case "Формирующая":
+                if let weight = mark.weight, let doubleValue = Double(weight) {
+                    v2 = doubleValue
+                }
+                if let value = mark.value, value != "н", let intValue = Int(value) {
+                    tempF += intValue
+                    countF += 1
+                }
+            case "Творческая":
+                if let weight = mark.weight, let doubleValue = Double(weight) {
+                    v3 = doubleValue
+                }
+                if let value = mark.value, value != "н", let intValue = Int(value) {
+                    tempT += intValue
+                    countT += 1
+                }
+            default:
+                continue
+            }
+        }
+
+        if countK > 0 {
+            K = Double(tempK)/Double(countK)
+        } else {
+            K = 0
+        }
+
+        if countF > 0 {
+            F = Double(tempF)/Double(countF)
+        } else {
+            F = 0
+        }
+
+        if countT > 0 {
+            T = Double(tempT)/Double(countT)
+        } else {
+            T = 0
+        }
+
+        self.resultMark = K*v1 + F*v2 + T*v3
+    }
+
+    
+    
 }
+
 
 
 

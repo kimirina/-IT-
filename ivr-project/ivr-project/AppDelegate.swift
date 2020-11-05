@@ -50,7 +50,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       UNUserNotificationCenter.current().getNotificationSettings { (settings) in
         print("Notification settings: \(settings)")
         guard settings.authorizationStatus == .authorized else { return }
-        UIApplication.shared.registerForRemoteNotifications()
+        DispatchQueue.main.async {
+            UIApplication.shared.registerForRemoteNotifications()
+        }
       }
     }
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
@@ -69,6 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
+
 
 
 

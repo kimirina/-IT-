@@ -17,15 +17,13 @@ class ScheduleTableViewCell: UITableViewCell {
     @IBOutlet var endTimeLabel: UILabel!
 
     override func layoutSubviews() {
+        super.layoutSubviews()
         subjectLabel.sizeToFit()
         numLabel.sizeToFit()
         teacherLabel.sizeToFit()
         roomLabel.sizeToFit()
         startTimeLabel.sizeToFit()
         endTimeLabel.sizeToFit()
-
-        let subjectWidth = startTimeLabel.frame.minX - numLabel.frame.maxX - 16.0
-//        subjectLabel.frame = CGRect(x: subjectLabel.frame.origin.x, y: subjectLabel.frame.origin.y, width: subjectWidth, height: subjectLabel.frame.height)
     }
 
     func setCell(schoolClass: SchoolClass) {
@@ -37,4 +35,5 @@ class ScheduleTableViewCell: UITableViewCell {
         endTimeLabel.text = schoolClass.endtime
     }
 }
+
 

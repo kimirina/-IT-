@@ -33,7 +33,7 @@ final class NetworkSerivce {
     static var region: String?
     static var city: String?
     static var subjects = [String]()
-    static var marks = [String: [(String, Double)]]()
+    static var marks = [String: [Mark]]()
 
     static func logIn(login: String, password: String, completionHandler: @escaping (Result<String, Error>) -> Void) {
         //TODO: Подумать как сделать без force unwrap
@@ -95,6 +95,7 @@ final class NetworkSerivce {
         task.resume()
     }
 
+    //MARK: GET SCHEDULE
     static func schedule(studentId: String, days: String, rings: String, completionHandler: @escaping (Result<[SchoolDay], Error>) -> Void) {
 
         var urlComponents = URLComponents(string: "https://api.eljur.ru/api/getschedule")!
@@ -220,7 +221,9 @@ final class NetworkSerivce {
         return SchoolClass(name: name, num: num, room: room, teacher: teacher, grp_short: grp_short, grp: grp, starttime: starttime, endtime: endtime)
     }
 
-    static func getMarks(days: String,  completionHandler: @escaping (Result<[String: [(String, Double)]], Error>) -> Void) {
+
+    //MARK: GET MARKS
+    static func getMarks(days: String,  completionHandler: @escaping (Result<[String: [Mark]], Error>) -> Void) {
 
         var urlComponents = URLComponents(string: "https://api.eljur.ru/api/getmarks")!
 
@@ -275,9 +278,17 @@ final class NetworkSerivce {
                                             NetworkSerivce.marks["\(subjectName)"] = []
                                             if let marks = lesson["marks"] as? [[String: Any]] {
                                                 for mark in marks {
-                                                    if let value = mark["value"] as? String,
-                                                       let weight = mark["weight"] as? Double {
-                                                        NetworkSerivce.marks["\(subjectName)"]?.append((value, weight))
+                                                    var markModel = Mark()
+                                                    if let value = mark["value"] as? String {
+                                                        markModel.value = value
+//                                                        NetworkSerivce.marks["\(subjectName)"]?.append((value, weight))
+                                                        if let mtype_set = mark["mtype_set"] as? [String: Any] {
+                                                            let type = mtype_set["name"] as? String
+                                                            let weight = mtype_set["weight"] as? String
+                                                            markModel.type = type
+                                                            markModel.weight = weight
+                                                        }
+                                                        NetworkSerivce.marks["\(subjectName)"]?.append(markModel)
                                                     }
                                                 }
                                             }
@@ -367,6 +378,7 @@ final class NetworkSerivce {
     }
 
 }
+
 
 
 

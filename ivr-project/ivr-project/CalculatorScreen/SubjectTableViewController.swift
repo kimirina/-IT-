@@ -53,14 +53,8 @@ class SubjectsTableViewController: UIViewController, UITableViewDelegate, UITabl
             dismiss(animated: true, completion: nil)
             return
         }
-
-        let marksString = subjetcMarks.reduce("") { $0 + " " + $1.0 }
-        calculaterViewController?.marksTextField.text = marksString
-        tableView.deselectRow(at: indexPath, animated: true)
-        dismiss(animated: true, completion: nil)
-        
-        let weightsString = subjetcMarks.reduce("") { $0 + " " + $1.1 }
-        calculaterViewController?.weightTextField.text = weightsString
+        calculaterViewController?.subjectMarks = subjetcMarks
+        calculaterViewController?.getResultMark()
         tableView.deselectRow(at: indexPath, animated: true)
         dismiss(animated: true, completion: nil)
     }
@@ -82,6 +76,7 @@ extension SubjectsTableViewController: PanModalPresentable {
     }
 
 }
+
 
 
 

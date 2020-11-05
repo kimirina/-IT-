@@ -14,6 +14,7 @@
 		FA375EE4251FDE41009B2A83 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA375EE3251FDE41009B2A83 /* SettingsViewController.swift */; };
 		FA375EE6251FE6F6009B2A83 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA375EE5251FE6F6009B2A83 /* SettingsCell.swift */; };
 		FA375EE8251FE79E009B2A83 /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA375EE7251FE79E009B2A83 /* SettingsSection.swift */; };
+		FA38A07D25534B7D002276E6 /* Mark.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA38A07C25534B7D002276E6 /* Mark.swift */; };
 		FA471604254F5FFD00F704E4 /* VUZViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA471603254F5FFD00F704E4 /* VUZViewController.swift */; };
 		FA47160A2550543C00F704E4 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4716092550543C00F704E4 /* Notifications.swift */; };
 		FA48DAF2253C4783001C7185 /* ScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA48DAF1253C4783001C7185 /* ScheduleTableViewController.swift */; };
@@ -41,6 +42,7 @@
 		FA375EE3251FDE41009B2A83 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		FA375EE5251FE6F6009B2A83 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		FA375EE7251FE79E009B2A83 /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
+		FA38A07C25534B7D002276E6 /* Mark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mark.swift; sourceTree = "<group>"; };
 		FA471603254F5FFD00F704E4 /* VUZViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VUZViewController.swift; sourceTree = "<group>"; };
 		FA4716092550543C00F704E4 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		FA48DAF1253C4783001C7185 /* ScheduleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 			children = (
 				FA2A2C2125174670008A3749 /* CalculatorViewController.swift */,
 				FAC22DCB2529C92100FDD248 /* SubjectTableViewController.swift */,
+				FA38A07C25534B7D002276E6 /* Mark.swift */,
 			);
 			path = CalculatorScreen;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 			files = (
 				FAB002132532F569003F0130 /* NetworkService.swift in Sources */,
 				FA5588652506499E00798D54 /* LoginViewController.swift in Sources */,
+				FA38A07D25534B7D002276E6 /* Mark.swift in Sources */,
 				FA9D86C4253B5D4C0017C697 /* SchoolDay.swift in Sources */,
 				FAB0020C2532F359003F0130 /* Extensions.swift in Sources */,
 				FA375EE8251FE79E009B2A83 /* SettingsSection.swift in Sources */,
