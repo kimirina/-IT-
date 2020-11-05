@@ -54,7 +54,13 @@ class SubjectsTableViewController: UIViewController, UITableViewDelegate, UITabl
             return
         }
         calculaterViewController?.subjectMarks = subjetcMarks
-        calculaterViewController?.getResultMark()
+        let marksString = subjetcMarks.reduce("") {
+            guard let value = $1.value else {
+                return $0
+            }
+            return $0 + " " + value
+        }
+        calculaterViewController?.marksTextField.text = marksString
         tableView.deselectRow(at: indexPath, animated: true)
         dismiss(animated: true, completion: nil)
     }

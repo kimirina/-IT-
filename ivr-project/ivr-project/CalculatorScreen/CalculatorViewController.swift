@@ -10,28 +10,29 @@ import Foundation
 import UIKit
 import PanModal
 
+//ПЛАН
+// 1. Запретить лишние символы
+// 2.
+
+
 class CalculatorViewController: UIViewController {
 
     var togle: Bool = false
     var subjectMarks = [Mark]() {
-        willSet {
-            print(newValue)
-            let marksString = newValue.reduce("") {
-                guard let value = $1.value else {
-                    return $0
-                }
-                return $0 + " " + value
-            }
-            marksTextField.text = marksString
-//
-//            let weightsString = newValue.reduce("") { $0 + " " + String($1.1) }
-//            weightTextField.text = weightsString
+        didSet {
+            getResultMark()
         }
     }
 
+    var subjectWeigts = [
+        "Констатирующая": 0.0,
+        "Формирующая": 0.0,
+        "Творческая": 0.0
+    ]
+
     var resultMark: Double = 0.0 {
         willSet {
-            resultTextField.text = String(newValue)
+            resultTextField.text = String(newValue.rounded(toPlaces: 3))
         }
     }
     
@@ -45,12 +46,6 @@ class CalculatorViewController: UIViewController {
     }()
 
     let subjects = ["Математика", "Физика", "Русский", "Биология"]
-    let pickerView: UIPickerView = {
-        let picker = UIPickerView()
-        picker.translatesAutoresizingMaskIntoConstraints = false
-        picker.isHidden = true
-        return picker
-    }()
 
     var subjectButton: UIButton = {
         let button = UIButton(type: .system)
@@ -61,6 +56,7 @@ class CalculatorViewController: UIViewController {
         return button
     }()
 
+    let markTypes = ["Констатирующая", "Формирующая", "Творческая"]
     var segmentedControl: UISegmentedControl = {
         let control = UISegmentedControl(items: ["Констатирующая", "Формирующая", "Творческая"])
         control.backgroundColor = .init(red: 0.85, green: 0.0, blue: 0.2, alpha: 1)
@@ -68,8 +64,14 @@ class CalculatorViewController: UIViewController {
         control.translatesAutoresizingMaskIntoConstraints = false
         let font = UIFont.systemFont(ofSize: 11)
         control.setTitleTextAttributes([NSAttributedString.Key.font : font], for: .normal)
+        control.addTarget(self, action: #selector(segmentedHandler), for: .valueChanged)
         return control
     }()
+
+    @objc
+    private func segmentedHandler() {
+        weightTextField.text = String(subjectWeigts[markTypes[segmentedControl.selectedSegmentIndex]]!)
+    }
 
     var marksTextField: UITextField = {
         let field = UITextField()
@@ -83,17 +85,6 @@ class CalculatorViewController: UIViewController {
         return field
     }()
 
-    var weightTextField: UITextField = {
-        let field = UITextField()
-        field.translatesAutoresizingMaskIntoConstraints = false
-        field.backgroundColor = .init(red: 0.55, green: 0.60, blue: 0.68, alpha: 0.5)
-        field.placeholder = "Коэффициент оценки"
-        field.layer.cornerRadius = 10
-        field.setLeftPaddingPoints(16.0)
-        field.setRightPaddingPoints(16.0)
-        return field
-    }()
-
     var resultTextField: UITextField = {
         let field = UITextField()
         field.translatesAutoresizingMaskIntoConstraints = false
@@ -102,6 +93,21 @@ class CalculatorViewController: UIViewController {
         field.layer.cornerRadius = 10
         field.setLeftPaddingPoints(16.0)
         field.setRightPaddingPoints(16.0)
+        field.textAlignment = .center
+        field.isUserInteractionEnabled = false
+        return field
+    }()
+
+    let weightTextField: WeightTextFeild = {
+        let field = WeightTextFeild()
+        field.translatesAutoresizingMaskIntoConstraints = false
+        field.placeholder = "Вес"
+        field.backgroundColor = .init(red: 0.55, green: 0.60, blue: 0.68, alpha: 0.5)
+        field.layer.cornerRadius = 10
+        field.keyboardType = UIKeyboardType.decimalPad
+        field.setLeftPaddingPoints(16.0)
+        field.setRightPaddingPoints(16.0)
+        field.textAlignment = .center
         return field
     }()
 
@@ -119,6 +125,7 @@ class CalculatorViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        marksTextField.delegate = self
         setupUI()
         getMarks()
 
@@ -129,7 +136,6 @@ class CalculatorViewController: UIViewController {
         view.addSubview(segmentedControl)
         view.addSubview(marksTextField)
         view.addSubview(resultTextField)
-        view.addSubview(pickerView)
         view.addSubview(calculatorLabel)
         view.addSubview(logOutButton)
         view.addSubview(weightTextField)
@@ -149,40 +155,29 @@ class CalculatorViewController: UIViewController {
         marksTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
         marksTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
         
-
-        weightTextField.topAnchor.constraint(equalTo: marksTextField.bottomAnchor, constant: 4.0).isActive = true
-        weightTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        weightTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        weightTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
-        weightTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
         
-        
-        resultTextField.topAnchor.constraint(equalTo: weightTextField.bottomAnchor, constant: 4.0).isActive = true
+        resultTextField.topAnchor.constraint(equalTo: marksTextField.bottomAnchor, constant: 4.0).isActive = true
         resultTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         resultTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         resultTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
         resultTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
-        
+
         
         segmentedControl.topAnchor.constraint(equalTo: resultTextField.bottomAnchor, constant: 16.0).isActive = true
         segmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         segmentedControl.heightAnchor.constraint(equalToConstant: 40).isActive = true
         segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
         segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
-        
-        
-        subjectButton.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 4.0).isActive = true
+
+        weightTextField.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 4.0).isActive = true
+        weightTextField.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        weightTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        weightTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
+        subjectButton.topAnchor.constraint(equalTo: weightTextField.bottomAnchor, constant: 4.0).isActive = true
         subjectButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
         subjectButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
         subjectButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
-
-        pickerView.topAnchor.constraint(equalTo: subjectButton.bottomAnchor, constant: 4.0).isActive = true
-        pickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        pickerView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        pickerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
-        pickerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
-
         
         logOutButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16.0).isActive = true
         logOutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0).isActive = true
@@ -203,8 +198,10 @@ class CalculatorViewController: UIViewController {
 
     //MARK: - Network response
 
+    //TODO: Вынести куда-нибудь
     private func getMarks() {
         NetworkSerivce.getMarks(
+            //TODO: Сделать динмаческую дату
             days: "20200901-20201231",
             completionHandler: {result in
                 switch result {
@@ -219,16 +216,6 @@ class CalculatorViewController: UIViewController {
 
     //MARK: - Calculation result
     func getResultMark() {
-
-        //TODO: УДАЛИТЬ!!!
-//        for i in 0...subjectMarks.count - 1 {
-//            subjectMarks[i].weight = ["0.25", "0.5", "0.75"].randomElement()
-//        }
-        subjectMarks = subjectMarks.map { (mark: Mark) -> Mark in
-            let newWeight = ["0.25", "0.5", "0.75"].randomElement()
-            let newType = ["Констатирующая", "Формирующая", "Творческая"].randomElement()
-            return Mark(type: newType, weight: newWeight, value: mark.value)
-        }
 
         //Веса оценок
         var v1: Double = 0 // вес К
@@ -299,13 +286,35 @@ class CalculatorViewController: UIViewController {
             T = 0
         }
 
+        subjectWeigts["Констатирующая"] = v1
+        subjectWeigts["Формирующая"] = v2
+        subjectWeigts["Творческая"] = v3
+        weightTextField.text = String(subjectWeigts[markTypes[segmentedControl.selectedSegmentIndex]]!)
         self.resultMark = K*v1 + F*v2 + T*v3
     }
 
-    
-    
 }
 
+extension CalculatorViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
+        let isValidSymbol = [" ", "0", "1", "2", "3", "4", "5", "н"].contains(string)
 
+        if isValidSymbol {
+            guard string != " " else {
+                return true
+            }
+
+            var newMark = Mark()
+            newMark.value = string
+            newMark.type = markTypes[segmentedControl.selectedSegmentIndex]
+            newMark.weight = weightTextField.text
+
+            subjectMarks.append(newMark)
+        }
+
+        return isValidSymbol
+    }
+
+}
 
