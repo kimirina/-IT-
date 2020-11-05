@@ -101,8 +101,7 @@ class CalculatorViewController: UIViewController {
     let weightTextField: WeightTextFeild = {
         let field = WeightTextFeild()
         field.translatesAutoresizingMaskIntoConstraints = false
-        field.placeholder = "Вес"
-        field.backgroundColor = .init(red: 0.55, green: 0.60, blue: 0.68, alpha: 0.5)
+        field.backgroundColor = .init(red: 0.43, green: 0.45, blue: 0.66, alpha: 0.5)
         field.layer.cornerRadius = 10
         field.keyboardType = UIKeyboardType.decimalPad
         field.setLeftPaddingPoints(16.0)
@@ -169,7 +168,7 @@ class CalculatorViewController: UIViewController {
         segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32.0).isActive = true
         segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32.0).isActive = true
 
-        weightTextField.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 4.0).isActive = true
+        weightTextField.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 16.0).isActive = true
         weightTextField.widthAnchor.constraint(equalToConstant: 80).isActive = true
         weightTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         weightTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true

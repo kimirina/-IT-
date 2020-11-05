@@ -239,6 +239,7 @@ final class NetworkSerivce {
             URLQueryItem(name: "devKey", value: devkey),
             URLQueryItem(name: "student", value: studentId),
             URLQueryItem(name: "days", value: days),
+            URLQueryItem(name: "with_typesets", value: "true"),
             URLQueryItem(name: "out_format", value: "json")
         ]
         urlComponents.queryItems = items

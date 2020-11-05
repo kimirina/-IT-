@@ -15,7 +15,6 @@
 		FA375EE6251FE6F6009B2A83 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA375EE5251FE6F6009B2A83 /* SettingsCell.swift */; };
 		FA375EE8251FE79E009B2A83 /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA375EE7251FE79E009B2A83 /* SettingsSection.swift */; };
 		FA38A07D25534B7D002276E6 /* Mark.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA38A07C25534B7D002276E6 /* Mark.swift */; };
-		FA38A08025545F60002276E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA38A07F25545F60002276E6 /* Assets.xcassets */; };
 		FA38A0872554792D002276E6 /* WeightTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA38A0862554792D002276E6 /* WeightTextField.swift */; };
 		FA471604254F5FFD00F704E4 /* VUZViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA471603254F5FFD00F704E4 /* VUZViewController.swift */; };
 		FA47160A2550543C00F704E4 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4716092550543C00F704E4 /* Notifications.swift */; };
@@ -44,8 +43,8 @@
 		FA375EE5251FE6F6009B2A83 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		FA375EE7251FE79E009B2A83 /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
 		FA38A07C25534B7D002276E6 /* Mark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mark.swift; sourceTree = "<group>"; };
-		FA38A07F25545F60002276E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../Downloads/AppIcons/Assets.xcassets; sourceTree = "<group>"; };
 		FA38A0862554792D002276E6 /* WeightTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightTextField.swift; sourceTree = "<group>"; };
+		FA38A08C25548818002276E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA471603254F5FFD00F704E4 /* VUZViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VUZViewController.swift; sourceTree = "<group>"; };
 		FA4716092550543C00F704E4 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		FA48DAF1253C4783001C7185 /* ScheduleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewController.swift; sourceTree = "<group>"; };
@@ -173,6 +172,7 @@
 				FA471602254F5F7100F704E4 /* SettingScreen */,
 				FA471607254F600C00F704E4 /* VUZController */,
 				FA5588662506499F00798D54 /* Main.storyboard */,
+				FA38A08C25548818002276E6 /* Assets.xcassets */,
 				FAB002112532F530003F0130 /* NetworkLayer */,
 				FA55886B250649A200798D54 /* LaunchScreen.storyboard */,
 				FA55886E250649A200798D54 /* Info.plist */,
@@ -202,7 +202,6 @@
 			isa = PBXGroup;
 			children = (
 				FAB002122532F569003F0130 /* NetworkService.swift */,
-				FA38A07F25545F60002276E6 /* Assets.xcassets */,
 			);
 			path = NetworkLayer;
 			sourceTree = "<group>";
@@ -270,7 +269,6 @@
 				FA55886D250649A200798D54 /* LaunchScreen.storyboard in Resources */,
 				7889D49D2549DA46008E78A3 /* ScheduleTableViewCell.xib in Resources */,
 				FA5588682506499F00798D54 /* Main.storyboard in Resources */,
-				FA38A08025545F60002276E6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
